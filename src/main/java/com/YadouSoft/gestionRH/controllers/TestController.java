@@ -18,7 +18,7 @@ public class TestController {
         this.salarieService = salarieService;
     }
 
-    @GetMapping("salarieId/{id}")
+    @GetMapping("salarie/{id}")
     public Salarie getSalarie(@PathVariable long id){
         return salarieService.getSalarieById(id);
     }
