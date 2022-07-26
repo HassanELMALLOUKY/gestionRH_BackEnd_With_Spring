@@ -4,6 +4,7 @@ package com.YadouSoft.gestionRH.models;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -31,6 +32,8 @@ public class Salarie{
     private DocAdminstratifJoindre docAdminstratifJoindre;
     @OneToOne()
     private Contrat contrat;
+    @OneToMany(mappedBy = "salarie")
+    private Collection <B2Paie> b2Paies;
 
     public Salarie(String nom, String prenom, Date dateNaissance, String CINE, String adresse, String tele, String email, String role, String matriculeCNSS, String nomBanque, String RIB, int nombreEnfants, Date dateDepart, String motifDepart) {
         this.nom = nom;
