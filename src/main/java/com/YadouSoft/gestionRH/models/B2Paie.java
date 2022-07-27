@@ -1,13 +1,19 @@
 package com.YadouSoft.gestionRH.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 
 @Entity
+@Data
+@NoArgsConstructor
 public class B2Paie {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
+
   private Integer CNSS;
   private Integer AMO;
   private Integer HeuresSupp;
@@ -22,8 +28,9 @@ public class B2Paie {
   private  Integer NetImposable;
   private  Integer IR;
   private  Integer SalaireNet;
-@ManyToOne
-  Salarie salarie;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "salarie_id")
+  private Salarie salarie;
 
   public B2Paie(Integer id, Integer CNSS, Integer AMO, Integer heuresSupp, Integer primeDancienneté, Integer primeDebilan, Integer primeDePanier, Integer primeDerendement, Integer indemnitéDeResponsabilité, Integer indemnitéDedéplacement, Integer indemnitéDeTransport, Integer salaireBrutImposable, Integer netImposable, Integer IR, Integer salaireNet, Salarie salarie) {
     this.id = id;
