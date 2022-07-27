@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SalarieRepository extends JpaRepository<Salarie, Long> {
     public Salarie getSalarieByCINE(String cine);
+    public Salarie deleteSalarieByCINE(String cine);
 }

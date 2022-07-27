@@ -1,14 +1,20 @@
 package com.YadouSoft.gestionRH.models;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 import javax.persistence.*;
+import lombok.AllArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import javax.persistence.*;
+@NoArgsConstructor
 @Entity
 @Data
-@NoArgsConstructor
 public class B2Paie {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +34,8 @@ public class B2Paie {
   private  Integer NetImposable;
   private  Integer IR;
   private  Integer SalaireNet;
+  @JsonIgnore
+  @ToString.Exclude @EqualsAndHashCode.Exclude
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "salarie_id")
   private Salarie salarie;
@@ -50,4 +58,5 @@ public class B2Paie {
     this.SalaireNet = salaireNet;
     this.salarie = salarie;
   }
+
 }
