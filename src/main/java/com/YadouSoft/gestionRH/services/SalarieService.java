@@ -21,8 +21,17 @@ public class SalarieService {
 
         return salarieRepository.getSalarieByCINE(cine);
     }
+
+    public Salarie deleteSalarieByCINE(String cine){
+
+        return salarieRepository.deleteSalarieByCINE(cine);
+    }
+
     public List<Salarie> getAllSalaries(){
 
         return salarieRepository.findAll();
+    }
+    public Salarie addSalarie(Salarie salarie){
+        return salarieRepository.save(salarie);
     }
 }

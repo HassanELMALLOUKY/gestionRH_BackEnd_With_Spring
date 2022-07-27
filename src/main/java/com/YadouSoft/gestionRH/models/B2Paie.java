@@ -4,11 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
-
-
-@Entity
 @NoArgsConstructor
+@Entity
 @Data
 public class B2Paie {
 @Id
@@ -28,7 +32,9 @@ public class B2Paie {
   private  Integer NetImposable;
   private  Integer IR;
   private  Integer SalaireNet;
-@ManyToOne
+  @JsonIgnore
+  @ToString.Exclude @EqualsAndHashCode.Exclude
+  @ManyToOne
   Salarie salarie;
 
   public B2Paie(Integer id, Integer CNSS, Integer AMO, Integer heuresSupp, Integer primeDancienneté, Integer primeDebilan, Integer primeDePanier, Integer primeDerendement, Integer indemnitéDeResponsabilité, Integer indemnitéDedéplacement, Integer indemnitéDeTransport, Integer salaireBrutImposable, Integer netImposable, Integer IR, Integer salaireNet, Salarie salarie) {
@@ -49,4 +55,5 @@ public class B2Paie {
     this.SalaireNet = salaireNet;
     this.salarie = salarie;
   }
+
 }

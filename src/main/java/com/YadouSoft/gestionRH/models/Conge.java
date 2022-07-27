@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Data
@@ -15,13 +14,11 @@ import java.util.Date;
 public class Conge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Temporal(TemporalType.DATE)
+    private long id;
     @Column(name = "date_debut")
-    private Date date_debut;
-    @Temporal(TemporalType.DATE)
+    private String date_debut;
     @Column(name = "date_fin")
-    private Date date_fin;
+    private String date_fin;
     @Column(name = "type")
     private String type;
     @Column(name = "motif")
@@ -30,10 +27,10 @@ public class Conge {
     private String status;
     @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private Salarie salarie;
 
-    public Conge(Date date_debut, Date date_fin, String type, String motif, String status) {
+    public Conge(String date_debut, String date_fin, String type, String motif, String status) {
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.type = type;

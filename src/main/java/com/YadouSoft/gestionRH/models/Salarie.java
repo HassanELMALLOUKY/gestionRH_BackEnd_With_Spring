@@ -2,6 +2,7 @@ package com.YadouSoft.gestionRH.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 @Entity
 @NoArgsConstructor
+@Data
 public class Salarie{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
