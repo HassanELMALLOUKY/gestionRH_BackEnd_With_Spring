@@ -1,9 +1,15 @@
 package com.YadouSoft.gestionRH.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 
 @Entity
+@NoArgsConstructor
+@Data
 public class B2Paie {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
