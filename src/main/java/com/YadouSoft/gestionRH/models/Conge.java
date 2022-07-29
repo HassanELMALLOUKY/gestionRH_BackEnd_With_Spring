@@ -25,6 +25,7 @@ public class Conge {
     private String motif;
     @Column(name = "status")
     private String status;
+    // Pending or Approved or Rejected
     @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @ManyToOne
