@@ -33,8 +33,12 @@ public class Salarie{
     private int nombreEnfants;
     private Date dateDepart;
     private String motifDepart;
+    @JsonIgnore
+    @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToOne()
     private DocAdminstratifJoindre docAdminstratifJoindre;
+    @JsonIgnore
+    @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToOne()
     private Contrat contrat;
     @OneToMany(mappedBy = "salarie")
