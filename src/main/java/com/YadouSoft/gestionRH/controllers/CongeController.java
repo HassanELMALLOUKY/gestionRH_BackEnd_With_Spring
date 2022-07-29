@@ -1,6 +1,8 @@
 package com.YadouSoft.gestionRH.controllers;
 
 
+import com.YadouSoft.gestionRH.beens.CongeInfo;
+import com.YadouSoft.gestionRH.enums.Statut;
 import com.YadouSoft.gestionRH.models.Conge;
 import com.YadouSoft.gestionRH.services.CongeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +38,26 @@ public class CongeController {
                 conge, id
         );
     }
-
     @DeleteMapping("/{id}")
     public String deleteConge(@PathVariable(name = "id") Long id){
         congeService.deleteConge(id);
         return "Deleted Successfully !";
+    }
+
+
+    @GetMapping("/salarie/{salarie}")
+    public List<Conge> CongesByPersonne(@PathVariable(name = "salarie") String CIN){
+        return congeService.CongesByPersonne(CIN);
+    }
+
+    @GetMapping("/touts")
+    public List<CongeInfo> getAllCongeInfo(){
+        return congeService.getAllCongeInfo();
+    }
+
+    // status accept just [Approved, Pending, Rejected ] ,I well used for Pending leave request :::
+    @GetMapping("/entraitment/{status}")
+    public List<Conge> getCongesByStatus(@PathVariable(name = "status") String status){
+        return congeService.getCongesByStatus(Statut.valueOf(status));
     }
 }
