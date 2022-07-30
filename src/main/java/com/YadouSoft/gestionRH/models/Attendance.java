@@ -17,11 +17,12 @@ public class Attendance {
    @Id
    @GeneratedValue(strategy=GenerationType.IDENTITY)
    Long id;
-   String date;
-   String check_in;
+   String img;
+   String name;
+   String first_in;
    String breakk;
-   String check_out;
-   float hours;
+   String last_out;
+   String total;
    String status;
-   String details;
+   String shift;
      }

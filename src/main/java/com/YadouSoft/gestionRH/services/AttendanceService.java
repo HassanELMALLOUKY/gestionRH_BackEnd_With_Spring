@@ -41,7 +41,7 @@ public  Attendance  getAttendance(Long id){
 }
 
 //fuction getAttendence
-public List<Attendance> getAllAttendence(){
+public List<Attendance> getAllAttendance(){
 return  attendanceRepositories.findAll();
 }
 
