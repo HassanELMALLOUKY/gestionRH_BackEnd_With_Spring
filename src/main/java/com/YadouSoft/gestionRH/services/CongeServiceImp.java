@@ -56,11 +56,11 @@ public class CongeServiceImp implements CongeService{
             Conge conge = (Conge) o[0];
             Salarie salarie = (Salarie) o[1];
             congeInfo.setSalarieName(salarie.getNom());
-            congeInfo.setDate_debut(conge.getDate_debut());
-            congeInfo.setDate_fin(conge.getDate_fin());
-            congeInfo.setMotif(conge.getMotif());
+            congeInfo.setDate_debut(conge.getFrom());
+            congeInfo.setDate_fin(conge.getLeaveTo());
+            congeInfo.setMotif(conge.getReason());
             congeInfo.setStatus(conge.getStatus().toString());
-            congeInfo.setDemi_journee(conge.getDemi_journee());
+            congeInfo.setDemi_journee(conge.getNoOfDays());
             congeInfo.setType(conge.getType());
 
             congeInfos.add(congeInfo);
