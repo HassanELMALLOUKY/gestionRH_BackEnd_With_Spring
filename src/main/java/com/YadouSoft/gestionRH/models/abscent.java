@@ -14,8 +14,6 @@ public class abscent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     Long id;
-    String img;
-    String name;
     String first_in;
     String first_out;
     String last_in;

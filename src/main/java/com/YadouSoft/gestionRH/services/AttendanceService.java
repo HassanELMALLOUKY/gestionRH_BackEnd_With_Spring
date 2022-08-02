@@ -6,6 +6,7 @@ import com.YadouSoft.gestionRH.repositories.AbscentRepositories;
 import com.YadouSoft.gestionRH.repositories.AttendanceRepositories;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -58,8 +59,12 @@ return  attendanceRepositories.findAll();
         //System.out.println(Arrays.toString(words));
        // LocalDateTime dateTime = LocalDateTime.parse(abscent.getFirst_in());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-        LocalDateTime newDate = LocalDateTime.parse(abscent.getFirst_in(), formatter);
-        System.out.print(newDate.getHour());
+        LocalDateTime from = LocalDateTime.parse(abscent.getFirst_in(), formatter);
+        LocalDateTime to = LocalDateTime.parse(abscent.getFirst_out(), formatter);
+        Duration duration = Duration.between(from, to);
+        float res=(float) duration.toMinutes()/60;
+        System.out.println(res + "hours");
+
         abscentRepositories.save(abscent);
     }
 
