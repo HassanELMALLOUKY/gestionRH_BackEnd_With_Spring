@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("api/")
+@RequestMapping("salaries/")
 public class SalarieController {
     private SalarieService salarieService;
 
@@ -16,7 +17,7 @@ public class SalarieController {
         this.salarieService = salarieService;
     }
     //Obtenir les info d'un salarié
-    @GetMapping("salaries/{cine}")
+    @GetMapping("salarie/{cine}")
     public Salarie getSalarieByCINE(@PathVariable String cine){
 
         return salarieService.getSalarieByCINE(cine);
