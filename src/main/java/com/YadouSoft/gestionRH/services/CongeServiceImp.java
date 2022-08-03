@@ -1,10 +1,14 @@
 package com.YadouSoft.gestionRH.services;
 
+import com.YadouSoft.gestionRH.beens.CongeInfo;
+import com.YadouSoft.gestionRH.enums.Statut;
 import com.YadouSoft.gestionRH.models.Conge;
+import com.YadouSoft.gestionRH.models.Salarie;
 import com.YadouSoft.gestionRH.repositories.CongeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CongeServiceImp implements CongeService{
@@ -36,4 +40,38 @@ public class CongeServiceImp implements CongeService{
     public void deleteConge(Long id) {
         congeRepository.deleteById(id);
     }
+
+
+    @Override
+    public List<Conge> CongesByPersonne(String CIN) {
+        return congeRepository.CongesByPersonne(CIN);
+    }
+
+    @Override
+    public List<CongeInfo> getAllCongeInfo() {
+        List<CongeInfo> congeInfos = new ArrayList<>();
+        List<Object[]> result = congeRepository.getAllCongeInfo();
+        for (Object o[] : result){
+            CongeInfo congeInfo = new CongeInfo();
+            Conge conge = (Conge) o[0];
+            Salarie salarie = (Salarie) o[1];
+            congeInfo.setSalarieName(salarie.getNom());
+            congeInfo.setDate_debut(conge.getFrom());
+            congeInfo.setDate_fin(conge.getLeaveTo());
+            congeInfo.setMotif(conge.getReason());
+            congeInfo.setStatus(conge.getStatus().toString());
+            congeInfo.setDemi_journee(conge.getNoOfDays());
+            congeInfo.setType(conge.getType());
+
+            congeInfos.add(congeInfo);
+        }
+        return congeInfos;
+    }
+
+    @Override
+    public List<Conge> getCongesByStatus(Statut status) {
+        return congeRepository.getCongesByStatus(status);
+    }
+
+
 }

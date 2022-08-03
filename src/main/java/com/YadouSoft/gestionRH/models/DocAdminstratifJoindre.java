@@ -16,6 +16,8 @@ public class DocAdminstratifJoindre {
     private String copieCarteCNSS;
     private String fichAnthropométrique;
     private String radiographiePulmonaire;
+    @OneToOne(mappedBy = "docAdminstratifJoindre")
+    private Salarie salarie;
 
     public DocAdminstratifJoindre(String copieDiplomes, String copieCINE, String copieCarteCNSS, String fichAnthropométrique, String radiographiePulmonaire) {
         this.copieDiplomes = copieDiplomes;
