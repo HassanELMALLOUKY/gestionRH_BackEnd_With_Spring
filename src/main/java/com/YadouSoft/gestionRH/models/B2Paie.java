@@ -23,39 +23,41 @@ public class B2Paie {
   private Integer CNSS;
   private Integer AMO;
   private Integer HeuresSupp;
-  private  Integer PrimeDancienneté;
+  private  Integer PrimeDanciennete;
   private  Integer PrimeDebilan;
   private  Integer PrimeDePanier;
   private  Integer PrimeDerendement;
-  private  Integer IndemnitéDeResponsabilité;
-  private  Integer IndemnitéDedéplacement;
-  private  Integer IndemnitéDeTransport;
+  private  Integer IndemniteDeResponsabilite;
+  private  Integer IndemniteDedeplacement;
+  private  Integer IndemniteDeTransport;
   private  Integer SalaireBrutImposable;
   private  Integer NetImposable;
   private  Integer IR;
   private  Integer SalaireNet;
+  private  String name;
   @JsonIgnore
   @ToString.Exclude @EqualsAndHashCode.Exclude
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "salarie_id")
   private Salarie salarie;
 
-  public B2Paie(Integer id, Integer CNSS, Integer AMO, Integer heuresSupp, Integer primeDancienneté, Integer primeDebilan, Integer primeDePanier, Integer primeDerendement, Integer indemnitéDeResponsabilité, Integer indemnitéDedéplacement, Integer indemnitéDeTransport, Integer salaireBrutImposable, Integer netImposable, Integer IR, Integer salaireNet, Salarie salarie) {
+  public B2Paie(Integer id, Integer CNSS, Integer AMO, Integer heuresSupp, Integer primeDanciennete, Integer primeDebilan, Integer primeDePanier, Integer primeDerendement, Integer indemniteDeResponsabilite, Integer indemniteDedeplacement, Integer indemniteDeTransport, Integer salaireBrutImposable, Integer netImposable, Integer IR, Integer salaireNet,String name, Salarie salarie) {
     this.id = id;
     this.CNSS = CNSS;
     this.AMO = AMO;
     this.HeuresSupp = heuresSupp;
-    this.PrimeDancienneté = primeDancienneté;
+    this.PrimeDanciennete = primeDanciennete;
     this.PrimeDebilan = primeDebilan;
     this.PrimeDePanier = primeDePanier;
     this.PrimeDerendement = primeDerendement;
-    this.IndemnitéDeResponsabilité = indemnitéDeResponsabilité;
-    this.IndemnitéDedéplacement = indemnitéDedéplacement;
-    this.IndemnitéDeTransport = indemnitéDeTransport;
+    this.IndemniteDeResponsabilite = indemniteDeResponsabilite;
+    this.IndemniteDedeplacement = indemniteDedeplacement;
+    this.IndemniteDeTransport = indemniteDeTransport;
     this.SalaireBrutImposable = salaireBrutImposable;
     this.NetImposable = netImposable;
     this.IR = IR;
     this.SalaireNet = salaireNet;
+    this.name=name;
     this.salarie = salarie;
   }
 
