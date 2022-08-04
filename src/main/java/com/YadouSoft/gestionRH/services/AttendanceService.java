@@ -6,6 +6,8 @@ import com.YadouSoft.gestionRH.repositories.AbscentRepositories;
 import com.YadouSoft.gestionRH.repositories.AttendanceRepositories;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -49,22 +51,37 @@ public  Attendance  getAttendance(Long id){
 
 //fuction getAttendence
 public List<Attendance> getAllAttendance(){
+
+
 return  attendanceRepositories.findAll();
 }
     //fuction add Attendance
     public  void  addAbscent(abscent abscent){
-       // String chanie=abscent.getFirst_in();
-       // System.out.print(chanie);
-       // String[] words = chanie.split("T");
-        //System.out.println(Arrays.toString(words));
-       // LocalDateTime dateTime = LocalDateTime.parse(abscent.getFirst_in());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-        LocalDateTime from = LocalDateTime.parse(abscent.getFirst_in(), formatter);
-        LocalDateTime to = LocalDateTime.parse(abscent.getFirst_out(), formatter);
-        Duration duration = Duration.between(from, to);
-        float res=(float) duration.toMinutes()/60;
-        System.out.println(res + "hours");
+         float res;
+        float dif1=DiffBetwenTowDateTime(abscent.getFirst_in(),abscent.getFirst_out());
+        float dif2=DiffBetwenTowDateTime(abscent.getLast_in(),abscent.getLast_out());
+        // res=dif1+dif2;
+        System.out.println(jsondateTotimeHourMunit(abscent.getFirst_out()).getHour());
 
+        if(jsondateTotimeHourMunit(abscent.getFirst_out()).getHour()==00){
+            System.out.println(jsondateTotimeHourMunit(abscent.getFirst_out()).getHour());
+          res=00;
+
+        }
+         else{
+             res=dif1;;
+            if(jsondateTotimeHourMunit(abscent.getLast_out()).getHour()!=00){
+                res+=dif2;
+            }
+
+            }
+
+
+
+        DecimalFormat df = new DecimalFormat("#.##");
+
+       // System.out.println(df.format(res));
+        abscent.setTotal(df.format(res));
         abscentRepositories.save(abscent);
     }
 
@@ -77,4 +94,33 @@ return  attendanceRepositories.findAll();
     public void deleteAbscent(Long id){
         abscentRepositories.deleteById(id);
     }
+
+
+
+    //duration betwen tow date
+
+    public float DiffBetwenTowDateTime( String datetime1 , String datetime2){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+        LocalDateTime from = LocalDateTime.parse(datetime1, formatter);
+        LocalDateTime to = LocalDateTime.parse(datetime2, formatter);
+        Duration duration = Duration.between(from, to);
+        float res=(float) duration.toMinutes()/60;
+        return res;
+
+    }
+    public LocalDateTime  jsondateTotimeHourMunit(String datetime1){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+        LocalDateTime from = LocalDateTime.parse(datetime1, formatter);
+
+
+       return from;
+    }
+  /*
+  public float getTotal(){
+
+
+
+  }*/
+
+
 }
