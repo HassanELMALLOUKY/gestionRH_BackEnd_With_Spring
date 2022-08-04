@@ -6,21 +6,23 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
 @Entity
 @NoArgsConstructor
 @Data
-public class Salarie{
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Salarie implements Serializable {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nom;
     private String prenom;
+    @Temporal(TemporalType.DATE)
     private Date dateNaissance;
-    @Id
     private String CINE;
     private String adresse;
     private String tele;
@@ -31,6 +33,7 @@ public class Salarie{
     private String nomBanque;
     private String RIB;
     private int nombreEnfants;
+    @Temporal(TemporalType.DATE)
     private Date dateDepart;
     private String motifDepart;
     @JsonIgnore
@@ -41,6 +44,8 @@ public class Salarie{
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToOne()
     private Contrat contrat;
+    @JsonIgnore
+    @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "salarie")
     private Collection <B2Paie> b2Paies;
     @JsonIgnore

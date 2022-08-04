@@ -12,10 +12,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 @NoArgsConstructor
 @Entity
 @Data
-public class B2Paie {
+public class B2Paie implements Serializable {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
