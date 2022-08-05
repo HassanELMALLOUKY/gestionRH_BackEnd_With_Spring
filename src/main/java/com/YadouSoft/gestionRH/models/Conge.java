@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Conge {
+public class Conge implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,8 +22,7 @@ public class Conge {
     @Column(name = "date_fin")
     private String leaveTo;
     @Column(name = "date_demande")
-    private String applyDate;
-    // LocalDateTime now = LocalDateTime.now();
+    private String applyDate;// LocalDateTime now = LocalDateTime.now();
 
     @Column(name = "demi_journee")
     private String noOfDays;
@@ -35,16 +35,20 @@ public class Conge {
     @Column(name = "sold")
     private String sold;
     // Pending or Approved or Rejected
-    @JsonIgnore
+
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @ManyToOne
     private Salarie salarie;
 
-    public Conge(String from, String leaveTo, String type, String reason, Statut status) {
+    public Conge(String from, String leaveTo, String applyDate, String noOfDays, String type, String reason, Statut status, String sold, Salarie salarie) {
         this.from = from;
         this.leaveTo = leaveTo;
+        this.applyDate = applyDate;
+        this.noOfDays = noOfDays;
         this.type = type;
         this.reason = reason;
         this.status = status;
+        this.sold = sold;
+        this.salarie = salarie;
     }
 }

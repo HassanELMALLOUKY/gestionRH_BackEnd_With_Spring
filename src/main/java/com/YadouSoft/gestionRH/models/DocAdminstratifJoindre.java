@@ -4,10 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 @Data
 @Entity
 @NoArgsConstructor
-public class DocAdminstratifJoindre {
+public class DocAdminstratifJoindre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
