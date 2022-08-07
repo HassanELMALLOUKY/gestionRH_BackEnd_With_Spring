@@ -17,6 +17,10 @@ public class SalarieService {
 
         return salarieRepository.findById(id).get();
     }
+    public Salarie getSalarieByCINE(String cine){
+
+        return salarieRepository.getSalarieByCINE(cine);
+    }
     /*public Salarie getSalarieByCINE(String cine){
 
         return salarieRepository.getSalarieByCINE(cine);
