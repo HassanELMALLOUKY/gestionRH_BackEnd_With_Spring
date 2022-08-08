@@ -29,7 +29,7 @@ public class Conge implements Serializable {
     private Date applyDate;// LocalDateTime now = LocalDateTime.now();
 
     @Column(name = "demi_journee")
-    private String noOfDays;
+    private String noOfDays;//jour d'absence
     @Column(name = "type")
     private String type;
     @Column(name = "motif")
