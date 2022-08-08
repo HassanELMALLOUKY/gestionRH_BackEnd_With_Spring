@@ -39,6 +39,7 @@ public class Conge implements Serializable {
     @Column(name = "sold")
     private String sold;
     // Pending or Approved or Rejected
+    private String nothing;
 
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @ManyToOne
