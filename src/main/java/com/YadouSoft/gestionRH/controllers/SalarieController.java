@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/salaries")
+@CrossOrigin("*")
 public class SalarieController {
     private SalarieService salarieService;
 
@@ -17,9 +18,14 @@ public class SalarieController {
     }
     //Obtenir les info d'un salarié
     @GetMapping("/{id}")
-    public Salarie getSalarieByCINE(@PathVariable long id){
+    public Salarie getSalarieById(@PathVariable long id){
 
         return salarieService.getSalarieById(id);
+    }
+    @GetMapping("/cine/{cine}")
+    public Salarie getSalarieByCINE(@PathVariable String cine){
+
+        return salarieService.getSalarieByCINE(cine);
     }
     //Ajouter un salarié
     @PostMapping("")
