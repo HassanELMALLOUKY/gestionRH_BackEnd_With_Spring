@@ -1,6 +1,7 @@
 package com.YadouSoft.gestionRH.models;
 
 
+import com.YadouSoft.gestionRH.enums.Statut;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,13 +21,13 @@ public class DemandeDoc implements Serializable {
     private String cin;
     private String requestType;
     private String requestDate;
-    private String status;
+    private Statut status;
     private String response;
     private String reason;
     @ManyToOne
     private Salarie salarie;
 
-    public DemandeDoc(Long id, String name, String requestType, String requestDate, String status, String reason, Salarie salarie) {
+    public DemandeDoc(Long id, String name, String requestType, String requestDate, Statut status, String reason, Salarie salarie) {
         this.id = id;
         this.name = name;
         this.requestType = requestType;
