@@ -1,8 +1,9 @@
 package com.YadouSoft.gestionRH.controllers;
 
-import com.YadouSoft.gestionRH.models.Attendance;
 import com.YadouSoft.gestionRH.models.abscent;
+import com.YadouSoft.gestionRH.repositories.AbscentRepositories;
 import com.YadouSoft.gestionRH.services.AttendanceService;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,14 +12,12 @@ import java.util.List;
 public class AttendanceController {
 
     private AttendanceService attendanceService;
+    private AbscentRepositories abscentRepositories;
 
-    public AttendanceController(AttendanceService attendanceService) {
+    public AttendanceController(AttendanceService attendanceService, AbscentRepositories abscentRepositories) {
         this.attendanceService = attendanceService;
+        this.abscentRepositories = abscentRepositories;
     }
-@GetMapping("/Attendances")
-public List<Attendance> getallAttendance(){
-    return attendanceService.getAllAttendance() ;
-}
 
     @GetMapping("/abscentes")
     public List<abscent> getallAbscent(){
@@ -33,7 +32,5 @@ public List<Attendance> getallAttendance(){
     public void delete(@PathVariable Long id) {
         attendanceService.deleteAbscent(id);
     }
-
-
 
 }
