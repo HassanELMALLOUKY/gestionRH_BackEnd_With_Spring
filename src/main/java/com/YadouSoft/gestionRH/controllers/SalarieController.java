@@ -2,13 +2,14 @@ package com.YadouSoft.gestionRH.controllers;
 
 import com.YadouSoft.gestionRH.models.Salarie;
 import com.YadouSoft.gestionRH.services.SalarieService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/salaries")
+@CrossOrigin("*")
 public class SalarieController {
     private SalarieService salarieService;
 
@@ -16,27 +17,32 @@ public class SalarieController {
         this.salarieService = salarieService;
     }
     //Obtenir les info d'un salarié
-    @GetMapping("salaries/{cine}")
+    @GetMapping("/{id}")
+    public Salarie getSalarieById(@PathVariable long id){
+
+        return salarieService.getSalarieById(id);
+    }
+    @GetMapping("/cine/{cine}")
     public Salarie getSalarieByCINE(@PathVariable String cine){
 
         return salarieService.getSalarieByCINE(cine);
     }
     //Ajouter un salarié
-    @PostMapping("salaries")
+    @PostMapping("")
     public Salarie saveSalarie(@RequestBody Salarie salarie){
 
         return salarieService.addSalarie(salarie);
     }
     //Obtenir les info de tous les salariés
-    @GetMapping("salaries")
+    @GetMapping("")
     public List<Salarie> getAllSalaries(){
 
         return salarieService.getAllSalaries();
     }
     //modifier les info d'un salarié
-    @PutMapping("salaries/{cine}")
-    public Salarie updateSalarieByCINE(@PathVariable String cine, @RequestBody Salarie salarie){
-        Salarie s=salarieService.getSalarieByCINE(cine);
+    @PutMapping("/{id}")
+    public Salarie updateSalarieByCINE(@PathVariable long id, @RequestBody Salarie salarie){
+        Salarie s=salarieService.getSalarieById(id);
         s.setNom(salarie.getNom());
         s.setPrenom(salarie.getPrenom());
         s.setAdresse(salarie.getAdresse());
@@ -55,9 +61,9 @@ public class SalarieController {
         return salarieService.addSalarie(s);
     }
     //supprimer un salarié
-    @DeleteMapping("salaries/{cine}")
-    public Salarie deleteSalarieByCINE(@PathVariable String cine){
+    @DeleteMapping("/{id}")
+    public List<Salarie> deleteSalarieByCINE(@PathVariable long id){
 
-        return salarieService.deleteSalarieByCINE(cine);
+        return salarieService.deleteSalarieById(id);
     }
 }

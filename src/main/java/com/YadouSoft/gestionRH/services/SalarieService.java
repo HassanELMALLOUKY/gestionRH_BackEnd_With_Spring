@@ -21,10 +21,14 @@ public class SalarieService {
 
         return salarieRepository.getSalarieByCINE(cine);
     }
+    /*public Salarie getSalarieByCINE(String cine){
 
-    public Salarie deleteSalarieByCINE(String cine){
+        return salarieRepository.getSalarieByCINE(cine);
+    }*/
 
-        return salarieRepository.deleteSalarieByCINE(cine);
+    public List<Salarie> deleteSalarieById(long id){
+        salarieRepository.deleteById(id);
+        return salarieRepository.findAll();
     }
 
     public List<Salarie> getAllSalaries(){

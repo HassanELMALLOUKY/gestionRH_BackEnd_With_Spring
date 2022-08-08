@@ -5,7 +5,6 @@ import com.YadouSoft.gestionRH.repositories.B2PaieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,9 +21,10 @@ public class B2PaieService {
   public List<B2Paie> getAllFicheP() {
     return b2PaieRepository.findAll();
   }
-  public void deleteFicheP(Integer id) {
+  public B2Paie deleteFicheP(Integer id) {
     b2PaieRepository.deleteById(id);
 
+    return null;
   }
   public List<B2Paie> findByEmployee_Id(Integer salarie_id) {
     return b2PaieRepository.findBysalarie_id(salarie_id);
