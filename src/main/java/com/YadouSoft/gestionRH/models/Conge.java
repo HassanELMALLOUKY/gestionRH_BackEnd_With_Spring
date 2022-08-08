@@ -29,7 +29,7 @@ public class Conge implements Serializable {
     private Date applyDate;// LocalDateTime now = LocalDateTime.now();
 
     @Column(name = "demi_journee")
-    private String noOfDays;//jour d'absence
+    private String noOfDays;
     @Column(name = "type")
     private String type;
     @Column(name = "motif")
@@ -39,7 +39,7 @@ public class Conge implements Serializable {
     @Column(name = "sold")
     private String sold;
     // Pending or Approved or Rejected
-    private String nothing;
+
 
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @ManyToOne
