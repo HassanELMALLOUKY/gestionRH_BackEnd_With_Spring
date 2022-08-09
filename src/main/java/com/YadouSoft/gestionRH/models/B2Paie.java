@@ -3,6 +3,8 @@ package com.YadouSoft.gestionRH.models;
 
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,9 +39,10 @@ public class B2Paie implements Serializable {
   private  Integer IR;
   private  Integer SalaireNet;
   private  String name;
-  @JsonIgnore
+  //@JsonIgnore
+  //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ToString.Exclude @EqualsAndHashCode.Exclude
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne()
   @JoinColumn(name = "salarie_id")
   private Salarie salarie;
 
