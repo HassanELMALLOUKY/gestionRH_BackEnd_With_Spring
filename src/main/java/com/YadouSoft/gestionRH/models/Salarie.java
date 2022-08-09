@@ -2,6 +2,7 @@ package com.YadouSoft.gestionRH.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenerationTime;
@@ -18,8 +19,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class Salarie implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
     private String nom;
+    private  Integer salaireBase;
     private String prenom;
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
@@ -45,8 +47,9 @@ public class Salarie implements Serializable {
     @OneToOne()
     private Contrat contrat;
     @JsonIgnore
+   // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ToString.Exclude @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "salarie")
+    @OneToMany(mappedBy = "salarie" )
     private Collection <B2Paie> b2Paies;
     @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
