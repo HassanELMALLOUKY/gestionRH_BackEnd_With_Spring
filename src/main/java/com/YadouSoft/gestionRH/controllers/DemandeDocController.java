@@ -19,6 +19,11 @@ public class DemandeDocController {
         return demandeDocService.getAllDemandeDocs();
     }
 
+    @GetMapping("/all/desc")
+    public List<DemandeDoc> findAllByOrderByIdDesc(){
+        return demandeDocService.findAllByOrderByIdDesc();
+    }
+
     @PostMapping("add")
     public DemandeDoc saveDemandeDoc(@RequestBody DemandeDoc demandeDoc) {
         return demandeDocService.saveDemandeDoc(demandeDoc);

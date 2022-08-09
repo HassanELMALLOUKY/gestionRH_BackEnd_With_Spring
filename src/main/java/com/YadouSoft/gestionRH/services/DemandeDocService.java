@@ -20,6 +20,12 @@ public class DemandeDocService {
         return demandeDocRepository.findAll();
     }
 
+    public List<DemandeDoc> findAllByOrderByIdDesc() {
+        return demandeDocRepository.findAllByOrderByIdDesc();
+    }
+
+
+
 
     public DemandeDoc saveDemandeDoc(DemandeDoc demandeDoc) {
         return demandeDocRepository.save(demandeDoc);
