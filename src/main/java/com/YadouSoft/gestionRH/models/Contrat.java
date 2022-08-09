@@ -1,5 +1,6 @@
 package com.YadouSoft.gestionRH.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,8 +24,7 @@ public class Contrat implements Serializable {
     private String service;
     private double salaireDeBase;
     private String typeRemuneration;
-    @OneToOne(mappedBy = "contrat")
-    private Salarie salarie;
+
 
     public Contrat(String nomEtablissement, String typeContrat, Date dateEmbauche, Date dateAnciennete, String intitulePoste, String categorie, String direction, String service, double salaireDeBase, String typeRemuneration) {
         this.nomEtablissement = nomEtablissement;

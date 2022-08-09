@@ -37,4 +37,6 @@ public class abscent {
 
     @Temporal(TemporalType.DATE)
     Date date;
+    @ManyToOne
+    private Salarie salarie;
 }

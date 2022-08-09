@@ -1,5 +1,6 @@
 package com.YadouSoft.gestionRH.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ public class DocAdminstratifJoindre implements Serializable {
     private String copieCarteCNSS;
     private String fichAnthropométrique;
     private String radiographiePulmonaire;
+
     @OneToOne(mappedBy = "docAdminstratifJoindre")
     private Salarie salarie;
 
