@@ -6,6 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.JoinColumnOrFormula;
+import org.hibernate.annotations.JoinColumnsOrFormulas;
+import org.hibernate.annotations.JoinFormula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,14 +40,15 @@ public class Conge implements Serializable {
     private String reason;
     @Column(name = "status")
     private Statut status;
+    @ToString.Exclude @EqualsAndHashCode.Exclude
+    @ManyToOne
+    private Salarie salarie;
     @Column(name = "sold")
     private String sold;
     // Pending or Approved or Rejected
 
 
-    @ToString.Exclude @EqualsAndHashCode.Exclude
-    @ManyToOne
-    private Salarie salarie;
+
 
     public Conge(Date from, Date leaveTo, Date applyDate, String noOfDays, String type, String reason, Statut status, String sold, Salarie salarie) {
         this.from = from;
