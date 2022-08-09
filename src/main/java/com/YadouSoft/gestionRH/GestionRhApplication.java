@@ -1,6 +1,5 @@
 package com.YadouSoft.gestionRH;
 
-import com.YadouSoft.gestionRH.models.Attendance;
 import com.YadouSoft.gestionRH.models.abscent;
 import com.YadouSoft.gestionRH.services.AttendanceService;
 import org.springframework.boot.CommandLineRunner;
