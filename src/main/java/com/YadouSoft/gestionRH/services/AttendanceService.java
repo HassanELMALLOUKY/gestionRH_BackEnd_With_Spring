@@ -12,7 +12,10 @@ import java.util.List;
 
 @Service
 public class AttendanceService {
-
+     float sum25;
+     float sum50;
+     float sum100;
+     float nbr_j_absence;
     private AbscentRepositories abscentRepositories;
 
     public AttendanceService(AbscentRepositories abscentRepositories) {
@@ -27,18 +30,21 @@ public class AttendanceService {
     public  void  addAbscent(abscent abscent){
 
         abscent.setTotal(getTotal(abscent));
+
         abscent.setNbr_h_par_jour_sup1(getSup(abscent.getSup1_in(), abscent.getSup1_out()));
         abscent.setNbr_h_par_jour_sup2(getSup(abscent.getSup2_in(),abscent.getSup2_out()));
         if(abscent.getType().equals("normal")){
-           //abscent.set
+           abscent.setSup25(Float.parseFloat(abscent.getNbr_h_par_jour_sup1()));
+           abscent.setSup50(Float.parseFloat(abscent.getNbr_h_par_jour_sup2()));
         }else{
-
+           abscent.setSup50(Float.parseFloat(abscent.getNbr_h_par_jour_sup1()));
+           abscent.setSup100(Float.parseFloat(abscent.getNbr_h_par_jour_sup2()));
 
         }
         abscentRepositories.save(abscent);
     }
 
-    public  String getTotal(abscent abscent){
+    public  float getTotal(abscent abscent){
         float res;
         float dif1=diffbetwenTime(abscent.getFirst_in(),abscent.getFirst_out());
         float dif2=diffbetwenTime(abscent.getLast_in(),abscent.getLast_out());
@@ -51,7 +57,6 @@ public class AttendanceService {
         if(jsondateTotimeHourMunit(abscent.getFirst_out()).getHour()==00){
             System.out.println(jsondateTotimeHourMunit(abscent.getFirst_out()).getHour());
             res=00;
-
         }
         else{
             res=dif1;;
@@ -61,9 +66,12 @@ public class AttendanceService {
 
         }
         DecimalFormat df = new DecimalFormat("#.##");
-        System.out.println(df.format(res));
-        abscent.setTotal(df.format(res));
-        return df.format(res);
+        float jjj=Float.parseFloat(df.format(8-res));
+        abscent.setNbr_h_absence(Float.parseFloat(df.format(8-res)));
+        System.out.println(Float.parseFloat(df.format(8-res)));
+        //abscent.setTotal(df.format(res));
+
+        return Float.parseFloat(df.format(8-res));
     }
     public  String getSup(String supin,String supout){
         float res;
@@ -133,6 +141,51 @@ public class AttendanceService {
     }
 
 
+  public List<abscent> getAllbycin(String cin){
 
+        return  abscentRepositories.getByCin(cin);
+  }
+
+
+
+   // get number day absence by cin
+  public  float getSumNbrDayabsence(String cin){
+        this.nbr_j_absence=0;
+        getAllbycin(cin).forEach(abscent -> {
+            nbr_j_absence+=abscent.getNbr_h_absence();
+        });
+        return nbr_j_absence/24;
+    }
+
+
+
+    // get number h supp of type 25  by cin
+  public  float getSumSup25byCin(String cin){
+        this.sum25=0;
+        getAllbycin(cin).forEach(abscent -> {
+            sum25+=abscent.getSup25();
+        });
+      return sum25;
+  }
+
+    // get number h supp of type 25  by cin
+  public  float getSumSup50byCin(String
+
+                                         cin){
+        this.sum50=0;
+        getAllbycin(cin).forEach(abscent -> {
+            sum50+=abscent.getSup50();
+        });
+        return sum50;
+    }
+
+    // get number h supp of type 100  by cin
+  public  float getSumSup100byCin(String cin){
+        this.sum100=0;
+        getAllbycin(cin).forEach(abscent -> {
+            sum100+=abscent.getSup50();
+        });
+        return sum100;
+    }
 
 }

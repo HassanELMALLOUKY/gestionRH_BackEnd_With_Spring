@@ -20,7 +20,7 @@ public class abscent {
     String first_out;
     String last_in;
     String last_out;
-    String total;
+    float total;
     String status;
     String shift;
     String type;
@@ -30,10 +30,10 @@ public class abscent {
     String sup2_in;
     String sup2_out;
     String nbr_h_par_jour_sup2;
-    String nbr_h_absence;
-    String sup25;
-    String sup50;
-    String sup100;
+    float nbr_h_absence;
+    float sup25;
+    float sup50;
+    float sup100;
 
     @Temporal(TemporalType.DATE)
     Date date;
