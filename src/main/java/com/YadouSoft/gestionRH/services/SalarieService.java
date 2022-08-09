@@ -35,6 +35,9 @@ public class SalarieService {
 
         return salarieRepository.findAll();
     }
+    public List<String> getAllSalariesNames(){
+        return salarieRepository.getSalarieNames();
+    }
     public Salarie addSalarie(Salarie salarie){
         return salarieRepository.save(salarie);
     }
