@@ -2,6 +2,7 @@ package com.YadouSoft.gestionRH.repositories;
 
 import com.YadouSoft.gestionRH.models.Contrat;
 import com.YadouSoft.gestionRH.models.Salarie;
+import com.YadouSoft.gestionRH.models.abscent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -21,4 +22,5 @@ public interface SalarieRepository extends JpaRepository<Salarie, Long> {
     public Salarie deleteSalarieByCINE(long id);
     @Query("select s.nom from Salarie s")
     public List<String> getSalarieNames();
+
 }

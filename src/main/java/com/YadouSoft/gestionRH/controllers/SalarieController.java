@@ -2,6 +2,7 @@ package com.YadouSoft.gestionRH.controllers;
 
 import com.YadouSoft.gestionRH.models.Conge;
 import com.YadouSoft.gestionRH.models.Salarie;
+import com.YadouSoft.gestionRH.models.abscent;
 import com.YadouSoft.gestionRH.services.SalarieService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,6 @@ public class SalarieController {
         return salarieService.getSalarieById(id);
     }
 
-    @GetMapping("getConge/{id}")
-    public Collection<Conge> getConge(@PathVariable long id){
-        return salarieService.getSalarieById(id).getCongeCollection();
-    }
     @GetMapping("/cine/{cine}")
     public Salarie getSalarieByCINE(@PathVariable String cine){
 
@@ -75,5 +72,9 @@ public class SalarieController {
     public List<Salarie> deleteSalarieByCINE(@PathVariable long id){
 
         return salarieService.deleteSalarieById(id);
+    }
+    @GetMapping("/abs/{id}")
+    public Collection<abscent> getAbs(@PathVariable long id){
+        return salarieService.getSalarieById(id).getAbscents();
     }
 }
