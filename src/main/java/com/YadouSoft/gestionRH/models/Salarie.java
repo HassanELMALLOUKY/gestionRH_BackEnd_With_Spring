@@ -19,11 +19,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class Salarie implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private long id;
     private String nom;
     private  Integer salaireBase;
     private String prenom;
-    @Formula("nom prenom")
+    @Formula("nom+prenom")
     private String fullName;
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
@@ -49,10 +49,7 @@ public class Salarie implements Serializable {
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToOne()
     private DocAdminstratifJoindre docAdminstratifJoindre;
-    @JsonIgnore
-    @ToString.Exclude @EqualsAndHashCode.Exclude
-    @OneToOne()
-    private Contrat contrat;
+
     @JsonIgnore
    // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ToString.Exclude @EqualsAndHashCode.Exclude
@@ -60,14 +57,14 @@ public class Salarie implements Serializable {
     private Collection <B2Paie> b2Paies;
     @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
-    @OneToMany(targetEntity = Conge.class, mappedBy = "salarie")
+    @OneToMany(targetEntity = Conge.class, mappedBy = "salarie", cascade = CascadeType.ALL)
     private Collection<Conge> congeCollection;
     
     @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "salarie")
     private Collection <DemandeDoc> demandeDocs;
-    @JsonIgnore
+
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "salarie")
     private Collection<abscent> abscents;
