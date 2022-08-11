@@ -17,8 +17,6 @@ public class DemandeDoc implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String cin;
     private String requestType;
     private String requestDate;
     private Statut status;
@@ -27,13 +25,13 @@ public class DemandeDoc implements Serializable {
     @ManyToOne
     private Salarie salarie;
 
-    public DemandeDoc(Long id, String name, String requestType, String requestDate, Statut status, String reason, Salarie salarie) {
+    public DemandeDoc(Long id, String requestType, String requestDate, Statut status, String reason, String response, Salarie salarie) {
         this.id = id;
-        this.name = name;
         this.requestType = requestType;
         this.requestDate = requestDate;
         this.status = status;
         this.reason = reason;
+        this.response =response;
         this.salarie = salarie;
 
     }
