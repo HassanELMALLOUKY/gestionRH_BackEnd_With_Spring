@@ -42,7 +42,7 @@ public class DemandeDocController {
     }
 
     @GetMapping("/salarie/{id}")
-    public List<DemandeDoc> demandeDocByPersonne(@PathVariable(name = "id") Integer id) {
+    public List<DemandeDoc> demandeDocByPersonne(@PathVariable(name = "id") long id) {
         return demandeDocService.demandeDocByPersonne(id);
     }
 }

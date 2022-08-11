@@ -40,7 +40,7 @@ public class DemandeDocService {
         demandeDocRepository.deleteById(demandeDocId);
     }
 
-    public List<DemandeDoc> demandeDocByPersonne(Integer id){
+    public List<DemandeDoc> demandeDocByPersonne(long id){
         return demandeDocRepository.demandeDocByPersonne(id);    }
 
 }
