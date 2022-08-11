@@ -1,9 +1,12 @@
 package com.YadouSoft.gestionRH.controllers;
 
+import com.YadouSoft.gestionRH.models.Conge;
 import com.YadouSoft.gestionRH.models.Salarie;
+import com.YadouSoft.gestionRH.models.abscent;
 import com.YadouSoft.gestionRH.services.SalarieService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -19,9 +22,9 @@ public class SalarieController {
     //Obtenir les info d'un salarié
     @GetMapping("/{id}")
     public Salarie getSalarieById(@PathVariable long id){
-
         return salarieService.getSalarieById(id);
     }
+
     @GetMapping("/cine/{cine}")
     public Salarie getSalarieByCINE(@PathVariable String cine){
 
@@ -39,6 +42,11 @@ public class SalarieController {
 
         return salarieService.getAllSalaries();
     }
+    @GetMapping("/names")
+    public List<String> getAllSalariesNames(){
+
+        return salarieService.getAllSalariesNames();
+    }
     //modifier les info d'un salarié
     @PutMapping("/{id}")
     public Salarie updateSalarieByCINE(@PathVariable long id, @RequestBody Salarie salarie){
@@ -46,7 +54,6 @@ public class SalarieController {
         s.setNom(salarie.getNom());
         s.setPrenom(salarie.getPrenom());
         s.setAdresse(salarie.getAdresse());
-        s.setContrat(salarie.getContrat());
         s.setDateDepart(salarie.getDateDepart());
         s.setDateNaissance(salarie.getDateNaissance());
         s.setEmail(salarie.getEmail());
@@ -65,5 +72,9 @@ public class SalarieController {
     public List<Salarie> deleteSalarieByCINE(@PathVariable long id){
 
         return salarieService.deleteSalarieById(id);
+    }
+    @GetMapping("/abs/{id}")
+    public Collection<abscent> getAbs(@PathVariable long id){
+        return salarieService.getSalarieById(id).getAbscents();
     }
 }

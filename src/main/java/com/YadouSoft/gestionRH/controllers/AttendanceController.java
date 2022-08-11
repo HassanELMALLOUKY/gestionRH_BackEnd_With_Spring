@@ -23,6 +23,11 @@ public class AttendanceController {
     public List<abscent> getallAbscent(){
         return attendanceService.getAllAbscent() ;
     }
+
+    @GetMapping("/abscentesbycin/{cin}")
+    public float getallAbscent(@PathVariable String cin){
+        return attendanceService.getSumSup25byCin(cin) ;
+    }
     @PostMapping("/abscentes")
     public void addAbscent(@RequestBody abscent abcsent){
          attendanceService.addAbscent(abcsent);
