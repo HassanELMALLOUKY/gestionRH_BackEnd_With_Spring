@@ -9,6 +9,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("DemandeDoc")
 public class DemandeDocController {
 
     @Autowired
@@ -27,5 +28,21 @@ public class DemandeDocController {
     @PostMapping("add")
     public DemandeDoc saveDemandeDoc(@RequestBody DemandeDoc demandeDoc) {
         return demandeDocService.saveDemandeDoc(demandeDoc);
+    }
+
+    @PatchMapping("/{id}")
+    public DemandeDoc updateDemandeDoc(@RequestBody DemandeDoc demandeDoc, @PathVariable(name = "id") Long demandeDocId) {
+        return demandeDocService.updateDemandeDoc(demandeDoc,demandeDocId);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteDemandeDoc(@PathVariable(name = "id") Long demandeDocId){
+        demandeDocService.deleteDemandeDoc(demandeDocId);
+        return "deleted ";
+    }
+
+    @GetMapping("/salarie/{id}")
+    public List<DemandeDoc> demandeDocByPersonne(@PathVariable(name = "id") long id) {
+        return demandeDocService.demandeDocByPersonne(id);
     }
 }
