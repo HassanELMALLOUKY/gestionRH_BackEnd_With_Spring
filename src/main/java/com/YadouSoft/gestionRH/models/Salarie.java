@@ -29,14 +29,15 @@ public class Salarie implements Serializable {
     private Date dateNaissance;
     @Formula("YEAR(CURDATE())-YEAR(date_naissance)")
     private String age;
+    @Column(length = 1000000)
+    private byte[] photo;
     private String CINE;
     private String adresse;
     private String tele;
     @Column(unique = true)
     private String email;
-    private double salaireDeBase;
     private String matriculeCNSS;
-    @Formula("YEAR(CURDATE())-YEAR(date_depart)")
+    @Formula("CEIL((DATEDIFF(CURDATE(), date_depart))/365)")
     private String anciennete;
     private String nomBanque;
     private double RIB;
@@ -45,6 +46,8 @@ public class Salarie implements Serializable {
     private Date dateDepart;
     private String motifDepart;
     private String role;
+    private Boolean marie;
+    private Double tauxNormal;
     @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToOne()
