@@ -36,10 +36,7 @@ public class SalarieController {
     }
     //Ajouter un salarié
     @PostMapping("")
-    public Salarie saveSalarie(@RequestBody Salarie salarie,@RequestParam("photo") MultipartFile photo) throws IOException {
-        Image img2 = new Image(photo.getOriginalFilename(), photo.getContentType(),
-                docAdministratifJoindreService.compressBytes(photo.getBytes()));
-        salarie.setPhoto(img2.getPicByte());
+    public Salarie saveSalarie(@RequestBody Salarie salarie){
         return salarieService.addSalarie(salarie);
     }
     //Obtenir les info de tous les salariés
