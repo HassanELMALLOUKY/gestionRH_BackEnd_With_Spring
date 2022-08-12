@@ -14,21 +14,25 @@ public class DocAdminstratifJoindre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String copieDiplomes;
+    private String copieDiplome;
+    @Column(length = 1000000)
+    private byte[] picByteDiplome;
     private String copieCINE;
+    @Column(length = 1000000)
+    private byte[] picByteCINE;
     private String copieCarteCNSS;
+    @Column(length = 1000000)
+    private byte[] picByteCNSS;
     private String fichAnthropométrique;
+    @Column(length = 1000000)
+    private byte[] picByteFichAnthropométrique;
     private String radiographiePulmonaire;
+    @Column(length = 1000000)
+    private byte[] picByteRadiographiePulmonaire;
 
     @OneToOne(mappedBy = "docAdminstratifJoindre")
     private Salarie salarie;
 
-    public DocAdminstratifJoindre(String copieDiplomes, String copieCINE, String copieCarteCNSS, String fichAnthropométrique, String radiographiePulmonaire) {
-        this.copieDiplomes = copieDiplomes;
-        this.copieCINE = copieCINE;
-        this.copieCarteCNSS = copieCarteCNSS;
-        this.fichAnthropométrique = fichAnthropométrique;
-        this.radiographiePulmonaire = radiographiePulmonaire;
-    }
+
 }
 

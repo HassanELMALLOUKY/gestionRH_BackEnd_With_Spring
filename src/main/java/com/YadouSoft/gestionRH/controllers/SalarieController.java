@@ -1,11 +1,13 @@
 package com.YadouSoft.gestionRH.controllers;
 
-import com.YadouSoft.gestionRH.models.Conge;
-import com.YadouSoft.gestionRH.models.Salarie;
-import com.YadouSoft.gestionRH.models.abscent;
+import com.YadouSoft.gestionRH.models.*;
+import com.YadouSoft.gestionRH.services.DocAdministratifJoindreService;
 import com.YadouSoft.gestionRH.services.SalarieService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,14 +17,16 @@ import java.util.List;
 @CrossOrigin("*")
 public class SalarieController {
     private SalarieService salarieService;
+    @Autowired
+    private DocAdministratifJoindreService docAdministratifJoindreService;
 
     public SalarieController(SalarieService salarieService) {
         this.salarieService = salarieService;
     }
     //Obtenir les info d'un salarié
     @GetMapping("/{id}")
-    public Salarie getSalarieById(@PathVariable long id){
-        return salarieService.getSalarieById(id);
+    public DocAdminstratifJoindre getSalarieById(@PathVariable long id){
+        return salarieService.getSalarieById(id).getDocAdminstratifJoindre();
     }
 
     @GetMapping("/cine/{cine}")
@@ -32,8 +36,10 @@ public class SalarieController {
     }
     //Ajouter un salarié
     @PostMapping("")
-    public Salarie saveSalarie(@RequestBody Salarie salarie){
-
+    public Salarie saveSalarie(@RequestBody Salarie salarie,@RequestParam("photo") MultipartFile photo) throws IOException {
+        Image img2 = new Image(photo.getOriginalFilename(), photo.getContentType(),
+                docAdministratifJoindreService.compressBytes(photo.getBytes()));
+        salarie.setPhoto(img2.getPicByte());
         return salarieService.addSalarie(salarie);
     }
     //Obtenir les info de tous les salariés
@@ -64,7 +70,6 @@ public class SalarieController {
         s.setRole(salarie.getRole());
         s.setTele(salarie.getTele());
         s.setMotifDepart(salarie.getMotifDepart());
-
         return salarieService.addSalarie(s);
     }
     //supprimer un salarié
