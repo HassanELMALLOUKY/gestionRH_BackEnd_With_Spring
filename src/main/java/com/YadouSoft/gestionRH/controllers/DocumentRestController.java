@@ -3,12 +3,11 @@ package com.YadouSoft.gestionRH.controllers;
 import com.YadouSoft.gestionRH.models.Document;
 import com.YadouSoft.gestionRH.repositories.DocumentRepository;
 
-import com.YadouSoft.gestionRH.services.DocumentService;
-import com.YadouSoft.gestionRH.services.DocumentServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/document")
 @CrossOrigin(origins ="*")
@@ -34,9 +33,13 @@ public class DocumentRestController {
         return documentRepository.save(document);
     }
 
-    @DeleteMapping
-    public void delete(Long id){
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable(name = "id") Long id){
         documentRepository.deleteById(id);
     }
 
+    @GetMapping ("/{id}")
+    public Optional<Document> getById(@PathVariable(name = "id") Long id){
+       return documentRepository.findById(id);
+    }
 }
