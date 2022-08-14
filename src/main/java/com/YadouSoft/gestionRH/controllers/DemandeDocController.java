@@ -1,6 +1,8 @@
 package com.YadouSoft.gestionRH.controllers;
 
+import com.YadouSoft.gestionRH.enums.Statut;
 import com.YadouSoft.gestionRH.models.DemandeDoc;
+import com.YadouSoft.gestionRH.repositories.DemandeDocRepository;
 import com.YadouSoft.gestionRH.services.DemandeDocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,9 @@ public class DemandeDocController {
 
     @Autowired
     DemandeDocService demandeDocService;
+
+    @Autowired
+    DemandeDocRepository demandeDocRepository;
 
     @GetMapping("/all")
     public List<DemandeDoc> getAllDemandeDocs(){
@@ -44,5 +49,10 @@ public class DemandeDocController {
     @GetMapping("/salarie/{id}")
     public List<DemandeDoc> demandeDocByPersonne(@PathVariable(name = "id") long id) {
         return demandeDocService.demandeDocByPersonne(id);
+    }
+
+    @GetMapping("/demandes/{status}")
+    public  List<DemandeDoc> getDemandeDocsByStatus(@PathVariable(name = "status") Statut statut){
+        return demandeDocRepository.getDemandeDocsByStatus(statut);
     }
 }
