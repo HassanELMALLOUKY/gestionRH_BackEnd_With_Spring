@@ -29,18 +29,22 @@ public class AttendanceService {
 
     public  void  addAbscent(abscent abscent){
 
-        abscent.setTotal(getTotal(abscent));
+
 
         abscent.setNbr_h_par_jour_sup1(getSup(abscent.getSup1_in(), abscent.getSup1_out()));
-        abscent.setNbr_h_par_jour_sup2(getSup(abscent.getSup2_in(),abscent.getSup2_out()));
+        abscent.setNbr_h_par_jour_sup2(gethsup2(abscent.getSup2_in(),abscent.getSup2_out()));
         if(abscent.getType().equals("normal")){
            abscent.setSup25(Float.parseFloat(abscent.getNbr_h_par_jour_sup1()));
            abscent.setSup50(Float.parseFloat(abscent.getNbr_h_par_jour_sup2()));
         }else{
-           abscent.setSup50(Float.parseFloat(abscent.getNbr_h_par_jour_sup1()));
+
+
+
+           abscent.setSup50(Float.parseFloat(abscent.getNbr_h_par_jour_sup1())+getTotal(abscent));
            abscent.setSup100(Float.parseFloat(abscent.getNbr_h_par_jour_sup2()));
 
         }
+        abscent.setNbr_h_absence(8-getTotal(abscent));
         abscentRepositories.save(abscent);
     }
 
@@ -63,15 +67,14 @@ public class AttendanceService {
             if(jsondateTotimeHourMunit(abscent.getLast_out()).getHour()!=00){
                 res+=dif2;
             }
-
         }
         DecimalFormat df = new DecimalFormat("#.##");
-        float jjj=Float.parseFloat(df.format(8-res));
-        abscent.setNbr_h_absence(Float.parseFloat(df.format(8-res)));
-        System.out.println(Float.parseFloat(df.format(8-res)));
+        float jjj=Float.parseFloat(df.format(res));
+        abscent.setNbr_h_absence(Float.parseFloat(df.format(res)));
+        System.out.println(Float.parseFloat(df.format(res)));
         //abscent.setTotal(df.format(res));
 
-        return Float.parseFloat(df.format(8-res));
+        return Float.parseFloat(df.format(res));
     }
     public  String getSup(String supin,String supout){
         float res;
@@ -139,17 +142,54 @@ public class AttendanceService {
         }else res=0;
         return  res;
     }
+    public String          gethsup2(String datetime1 , String datetime2){
+        float h1,h2,m1,m2,m,res;
+        res=0;
+        h1=jsondateTotimeHourMunit(datetime1).getHour();
+        h2=jsondateTotimeHourMunit(datetime2).getHour();
+        m1=jsondateTotimeHourMunit(datetime1).getMinute();
+        m2=jsondateTotimeHourMunit(datetime2).getMinute();
+        System.out.println("h1-"+h1+"h2-"+h2+"m1-"+m1+"m2-"+m2);
+
+       if(h1>=20&&h1<=24){
+         if(h2>=21&&h2<=24){
+             res=h2-h1;
+             m=(m2-m1);
+             DecimalFormat df = new DecimalFormat("#.##");
+             res+=Float.parseFloat(df.format(m/60));
+         }
+         if(h2>=0&&h2<=5){
+               res=24-h1+h2;
+               m=(m2-m1);
+               DecimalFormat df = new DecimalFormat("#.##");
+               res+=Float.parseFloat(df.format(m/60));
+           }
 
 
-  public List<abscent> getAllbycin(String cin){
+       }
+        if(h1>=0&&h1<=5){
+
+            if(h2>=0&&h2<=5){
+                res=h2-h1;
+                m=(m2-m1);
+                DecimalFormat df = new DecimalFormat("#.##");
+                res+=Float.parseFloat(df.format(m/60));
+            }
+
+
+        }
+        String s=String.valueOf(res);
+
+        return  s;
+    }
+
+    public List<abscent> getAllbycin(String cin){
 
         return  abscentRepositories.getByCin(cin);
   }
 
-
-
-   // get number day absence by cin
-  public  float getSumNbrDayabsence(String cin){
+    // get number day absence by cin
+    public  float getSumNbrDayabsence(String cin){
         this.nbr_j_absence=0;
         getAllbycin(cin).forEach(abscent -> {
             nbr_j_absence+=abscent.getNbr_h_absence();
@@ -160,7 +200,7 @@ public class AttendanceService {
 
 
     // get number h supp of type 25  by cin
-  public  float getSumSup25byCin(String cin){
+    public  float getSumSup25byCin(String cin){
         this.sum25=0;
         getAllbycin(cin).forEach(abscent -> {
             sum25+=abscent.getSup25();
