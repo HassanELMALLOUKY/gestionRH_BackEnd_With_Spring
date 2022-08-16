@@ -1,9 +1,7 @@
 package com.YadouSoft.gestionRH.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,7 +19,7 @@ public class abscent {
     String first_out;
     String last_in;
     String last_out;
-    float total;
+    float total=0;
     String status;
     String shift;
     String type;
@@ -38,7 +36,7 @@ public class abscent {
 
     @Temporal(TemporalType.DATE)
     Date date;
-    @JsonIgnore
-    @ManyToOne
+    @ToString.Exclude @EqualsAndHashCode.Exclude
+    @ManyToOne()
     private Salarie salarie;
 }

@@ -22,7 +22,7 @@ public class B2PaieController {
         this.b2PaieService=b2PaieService;
     }
     @GetMapping("/b2paie/{id}")
-    public B2Paie getFicheById(@PathVariable Integer id){
+    public B2Paie getFicheById(@PathVariable long id){
 
         return b2PaieService.getFicheP(id);
     }
@@ -37,21 +37,37 @@ public class B2PaieController {
         return b2PaieService.getAllFicheP();
     }
     @PutMapping("/{id}")
-    public B2Paie updateFichep(@RequestBody B2Paie b2Paie, @PathVariable(name = "id") Integer id){
+    public B2Paie updateFichep(@RequestBody B2Paie b2Paie, @PathVariable(name = "id") long id){
         b2Paie.setId(id);
         return b2PaieService.updateFicheP(
                 b2Paie, id
         );
     }
+    @GetMapping("/salarie")
+    public List<Salarie> getsalByb2(){
+        return b2PaieService.getsalByb2();
+    }
+    @GetMapping( "/salarie/{id}")
+    public B2Paie getsalByb2(@PathVariable long id){
+        return b2PaieService.findByEmployee_Id(id);
+    }
+
     @DeleteMapping("b2paie/delete/{id}")
-    public B2Paie deleteFicheById(@PathVariable Integer id){
+    public B2Paie deleteFicheById(@PathVariable long id){
 
         return b2PaieService.deleteFicheP(id);
     }
     @GetMapping("/find/{id}")
-    public Salarie getInfo( @PathVariable Integer id){
+    public Salarie getInfo( @PathVariable long id){
         return b2PaieService.getsalarieInfo(id);
        // Integer salarie=getFicheById(5).getSalarie().getId();
      // return b2PaieService.getsalarieInfo(salarie);
     }
+        @GetMapping("/calcul/{id}")
+    public B2Paie calculer( @PathVariable long id){
+        return b2PaieService.SettingData(id);
+        // Integer salarie=getFicheById(5).getSalarie().getId();
+        // return b2PaieService.getsalarieInfo(salarie);
+    }
+
 }
