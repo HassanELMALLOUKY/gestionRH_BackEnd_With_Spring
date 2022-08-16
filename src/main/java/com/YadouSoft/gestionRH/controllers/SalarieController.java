@@ -79,4 +79,5 @@ public class SalarieController {
     public Collection<abscent> getAbs(@PathVariable long id){
         return salarieService.getSalarieById(id).getAbscents();
     }
+
 }

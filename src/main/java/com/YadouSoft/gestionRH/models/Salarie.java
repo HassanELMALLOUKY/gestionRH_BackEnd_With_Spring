@@ -27,8 +27,7 @@ public class Salarie implements Serializable {
     private String fullName;
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
-    @Formula("YEAR(CURDATE())-YEAR(date_naissance)")
-    private String age;
+    @Formula("YEAR(CURDATE())-YEAR(date_naissance)")    private String age;
     @Column(length = 1000000)
     private byte[] photo;
     private String CINE;
@@ -38,7 +37,7 @@ public class Salarie implements Serializable {
     private String email;
     private String matriculeCNSS;
     @Formula("CEIL((DATEDIFF(CURDATE(), date_depart))/365)")
-    private String anciennete;
+    private double anciennete;
     private String nomBanque;
     private double RIB;
     private int nombreEnfants;
@@ -60,7 +59,7 @@ public class Salarie implements Serializable {
     private Collection <B2Paie> b2Paies;
     @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
-    @OneToMany(targetEntity = Conge.class, mappedBy = "salarie", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Conge.class, mappedBy = "salarie")
     private Collection<Conge> congeCollection;
     
     @JsonIgnore
@@ -68,6 +67,7 @@ public class Salarie implements Serializable {
     @OneToMany(mappedBy = "salarie")
     private Collection <DemandeDoc> demandeDocs;
 
+    @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "salarie")
     private Collection<abscent> abscents;
