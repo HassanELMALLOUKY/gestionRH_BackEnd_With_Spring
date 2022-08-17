@@ -2,7 +2,9 @@ package com.YadouSoft.gestionRH.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,9 +31,11 @@ public class DocAdminstratifJoindre implements Serializable {
     private String radiographiePulmonaire;
     @Column(length = 1000000)
     private byte[] picByteRadiographiePulmonaire;
-
-    @OneToOne(mappedBy = "docAdminstratifJoindre")
+    @OneToOne
+    @ToString.Exclude @EqualsAndHashCode.Exclude
+    @JoinColumn(name = "salarie_id")
     private Salarie salarie;
+
 
 
 }

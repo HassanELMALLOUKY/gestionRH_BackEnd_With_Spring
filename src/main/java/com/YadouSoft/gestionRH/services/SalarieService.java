@@ -47,4 +47,10 @@ public class SalarieService {
     public Collection<Conge> getConge(long id){
         return salarieRepository.findById(id).get().getCongeCollection();
     }
+    public Salarie getSalarieByNomAndPrenom(String nom, String prenom){
+        return salarieRepository.getSalarieByNomAndPrenom(nom, prenom);
+    }
+    public List<Salarie> getRestSalaries(){
+        return salarieRepository.getRestSalaries();
+    }
 }
