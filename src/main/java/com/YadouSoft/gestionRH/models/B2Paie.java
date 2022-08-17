@@ -39,7 +39,7 @@ public class B2Paie implements Serializable {
   private  Integer IR;
   private  Integer SalaireNet;
   private  String name;
-  //@JsonIgnore
+  @JsonIgnore
   //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ToString.Exclude @EqualsAndHashCode.Exclude
   @ManyToOne()

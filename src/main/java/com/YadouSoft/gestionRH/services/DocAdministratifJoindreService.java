@@ -7,8 +7,10 @@ import com.YadouSoft.gestionRH.repositories.DocAdministratifJoindreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -62,4 +64,5 @@ public class DocAdministratifJoindreService {
         }
         return outputStream.toByteArray();
     }
+
 }

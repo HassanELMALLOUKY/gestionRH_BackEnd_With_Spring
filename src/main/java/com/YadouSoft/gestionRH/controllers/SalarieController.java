@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,8 +48,15 @@ public class SalarieController {
     }
     @GetMapping("/names")
     public List<String> getAllSalariesNames(){
-
-        return salarieService.getAllSalariesNames();
+        List<String> list = new ArrayList<String>();
+        salarieService.getAllSalaries().forEach(salarie->{
+            list.add(salarie.getNom()+" "+salarie.getPrenom());
+        });
+        return list;
+    }
+    @GetMapping("/names/{nom}&{prenom}")
+    public Salarie getSalarieByNomAndPrenom(@PathVariable String nom, @PathVariable String prenom){
+        return salarieService.getSalarieByNomAndPrenom(nom, prenom);
     }
     //modifier les info d'un salarié
     @PutMapping("/{id}")
@@ -63,7 +71,9 @@ public class SalarieController {
         s.setMatriculeCNSS(salarie.getMatriculeCNSS());
         s.setNomBanque(salarie.getNomBanque());
         s.setNombreEnfants(salarie.getNombreEnfants());
-        s.setRIB(salarie.getRIB());
+        s.setRib(salarie.getRib());
+        s.setMarie(salarie.getMarie());
+        s.setTauxNormal(salarie.getTauxNormal());
         s.setRole(salarie.getRole());
         s.setTele(salarie.getTele());
         s.setMotifDepart(salarie.getMotifDepart());
@@ -79,4 +89,11 @@ public class SalarieController {
     public Collection<abscent> getAbs(@PathVariable long id){
         return salarieService.getSalarieById(id).getAbscents();
     }
+
+    @GetMapping("/rest")
+    public List<Salarie> getRestSalaries(){
+        return salarieService.getRestSalaries();
+    }
+
+
 }

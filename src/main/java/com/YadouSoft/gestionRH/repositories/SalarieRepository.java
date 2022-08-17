@@ -18,9 +18,12 @@ import java.util.List;
 
 public interface SalarieRepository extends JpaRepository<Salarie, Long> {
 
-    public Salarie getSalarieByCINE( @PathVariable String cine);
+    public Salarie getSalarieByCINE(String cine);
     public Salarie deleteSalarieByCINE(long id);
     @Query("select s.nom from Salarie s")
     public List<String> getSalarieNames();
+    public Salarie getSalarieByNomAndPrenom(String nom, String prenom);
+    @Query("select s from Salarie s,DocAdminstratifJoindre d where s.id <> d.salarie.id")
+    public List<Salarie> getRestSalaries();
 
 }
