@@ -27,7 +27,7 @@ public class DocumentRestController {
         return documentRepository.findAll();
 
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public Document update(@PathVariable(name = "id") Long id,@RequestBody Document document){
         document.setId(id);
         return documentRepository.save(document);
