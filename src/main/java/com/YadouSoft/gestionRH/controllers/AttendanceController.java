@@ -12,6 +12,7 @@ import java.util.List;
 public class AttendanceController {
 
     private AttendanceService attendanceService;
+
     private AbscentRepositories abscentRepositories;
 
     public AttendanceController(AttendanceService attendanceService, AbscentRepositories abscentRepositories) {
@@ -25,13 +26,15 @@ public class AttendanceController {
     }
 
     @GetMapping("/abscentesbycin/{cin}")
-    public float getallAbscent(@PathVariable String cin){
-        return attendanceService.getSumSup25byCin(cin) ;
+    public List<abscent> getallAbscent(@PathVariable String cin){
+        return attendanceService.getAllbycin(cin) ;
     }
+
     @PostMapping("/abscentes")
     public void addAbscent(@RequestBody abscent abcsent){
          attendanceService.addAbscent(abcsent);
     }
+
     //delete the post
     @DeleteMapping("/abscentes/{id}")
     public void delete(@PathVariable Long id) {

@@ -29,10 +29,8 @@ public class Salarie implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
-    @Column(nullable = false)
     @Formula("YEAR(CURDATE())-YEAR(date_naissance)")
     private String age;
-    @Column(nullable = false)
     private String CINE;
     @Column(nullable = false)
     private String adresse;
@@ -43,7 +41,7 @@ public class Salarie implements Serializable {
     @Column(nullable = false)
     private String matriculeCNSS;
     @Formula("CEIL((DATEDIFF(CURDATE(), date_depart))/365)")
-    private String anciennete;
+    private double anciennete;
     private String nomBanque;
     @Column(nullable = false)
     private double rib;
@@ -79,6 +77,7 @@ public class Salarie implements Serializable {
     @OneToMany(mappedBy = "salarie",cascade = CascadeType.ALL)
     private Collection <DemandeDoc> demandeDocs;
 
+    @JsonIgnore
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "salarie",cascade = CascadeType.ALL)
     private Collection<abscent> abscents;

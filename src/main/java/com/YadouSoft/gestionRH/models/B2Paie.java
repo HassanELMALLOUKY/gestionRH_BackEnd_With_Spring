@@ -22,31 +22,40 @@ import java.io.Serializable;
 public class B2Paie implements Serializable {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private long id;
 
-  private Integer CNSS;
-  private Integer AMO;
-  private Integer HeuresSupp;
-  private  Integer PrimeDanciennete;
+  private Double CNSS;
+  private Double AMO;
+  private Double AssuranceM;
+  private Double cimr;
+  private Double fraisProf;
+  private Double HeuresSupp;
+  private  Double PrimeDanciennete;
+  private Double prestationFamiliale;
+  private Double prestationSociale;
+  private Double formatioProf;
+  private Double amoPatronale;
+  private Double cimrPatronale;
+  private Double mutuellePatronale;
   private  Integer PrimeDebilan;
   private  Integer PrimeDePanier;
   private  Integer PrimeDerendement;
   private  Integer IndemniteDeResponsabilite;
   private  Integer IndemniteDedeplacement;
   private  Integer IndemniteDeTransport;
-  private  Integer SalaireBrutImposable;
-  private  Integer NetImposable;
-  private  Integer IR;
-  private  Integer SalaireNet;
+  private  Double SalaireBrutImposable;
+  private  Double NetImposable;
+  private  Double IR;
+  private  Double SalaireNet;
   private  String name;
-  @JsonIgnore
+ // @JsonIgnore
   //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ToString.Exclude @EqualsAndHashCode.Exclude
   @ManyToOne()
   @JoinColumn(name = "salarie_id")
   private Salarie salarie;
 
-  public B2Paie(Integer id, Integer CNSS, Integer AMO, Integer heuresSupp, Integer primeDanciennete, Integer primeDebilan, Integer primeDePanier, Integer primeDerendement, Integer indemniteDeResponsabilite, Integer indemniteDedeplacement, Integer indemniteDeTransport, Integer salaireBrutImposable, Integer netImposable, Integer IR, Integer salaireNet,String name, Salarie salarie) {
+  public B2Paie(Integer id, Double CNSS, Double AMO, Double heuresSupp, Double primeDanciennete, Integer primeDebilan, Integer primeDePanier, Integer primeDerendement, Integer indemniteDeResponsabilite, Integer indemniteDedeplacement, Integer indemniteDeTransport, Double salaireBrutImposable, Double netImposable, Double IR, Double salaireNet,String name, Salarie salarie) {
     this.id = id;
     this.CNSS = CNSS;
     this.AMO = AMO;
