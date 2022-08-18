@@ -38,6 +38,8 @@ public class Conge implements Serializable {
     private String type;
     @Column(name = "motif")
     private String reason;
+    @Column(name = "admin_reponse")
+    private String reponse;
     @Column(name = "status")
     private Statut status;
     @ToString.Exclude @EqualsAndHashCode.Exclude
