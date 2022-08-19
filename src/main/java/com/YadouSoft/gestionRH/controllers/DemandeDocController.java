@@ -35,6 +35,11 @@ public class DemandeDocController {
         return demandeDocService.saveDemandeDoc(demandeDoc);
     }
 
+    @GetMapping("/{id}")
+    public DemandeDoc getDemandeDocsById(@PathVariable(name = "id") Long demandeDocId){
+        return demandeDocService.getDemandeDocById(demandeDocId);
+    }
+
     @PatchMapping("/{id}")
     public DemandeDoc updateDemandeDoc(@RequestBody DemandeDoc demandeDoc, @PathVariable(name = "id") Long demandeDocId) {
         return demandeDocService.updateDemandeDoc(demandeDoc,demandeDocId);

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 public interface DemandeDocRepository extends JpaRepository<DemandeDoc,Long> {
+    @Query("select d from DemandeDoc d where d.status=2")
     public List<DemandeDoc> findAllByOrderByIdDesc();
     @Query("select d from DemandeDoc d where d.salarie.id=:id")
     public List<DemandeDoc> demandeDocByPersonne(@Param("id")long id);
