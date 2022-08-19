@@ -12,10 +12,12 @@ import java.util.Collection;
 public class Document implements Serializable {
     @Id @GeneratedValue
     private long id;
-    private String name;
+    private String Nom;
     @Lob //Lob annotation is used for long text area
     private String documentCodeHtml;
-
+    @Lob //Lob annotation is used for long text area
+    private String signatureImg;
+    private String CreePar;
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
