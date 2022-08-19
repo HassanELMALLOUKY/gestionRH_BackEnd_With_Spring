@@ -6,10 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.JoinColumnOrFormula;
-import org.hibernate.annotations.JoinColumnsOrFormulas;
-import org.hibernate.annotations.JoinFormula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,8 +30,9 @@ public class Conge implements Serializable {
 
     @Column(name = "demi_journee")
     private String noOfDays;
-    @Column(name = "type")
-    private String type;
+    @ToString.Exclude @EqualsAndHashCode.Exclude
+    @ManyToOne
+    private CongeType type;
     @Column(name = "motif")
     private String reason;
     @Column(name = "admin_reponse")
@@ -52,7 +49,7 @@ public class Conge implements Serializable {
 
 
 
-    public Conge(Date from, Date leaveTo, Date applyDate, String noOfDays, String type, String reason, Statut status, String sold, Salarie salarie) {
+    public Conge(Date from, Date leaveTo, Date applyDate, String noOfDays, CongeType type, String reason, Statut status, String sold, Salarie salarie) {
         this.from = from;
         this.leaveTo = leaveTo;
         this.applyDate = applyDate;
