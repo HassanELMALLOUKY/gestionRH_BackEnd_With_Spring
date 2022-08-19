@@ -1,10 +1,14 @@
 package com.YadouSoft.gestionRH.models;
 
 import com.YadouSoft.gestionRH.enums.TypeStatut;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -20,6 +24,10 @@ public class CongeType {
     private String leave_unit;// Days or Hours
     private TypeStatut status;
     private String note;
+    @JsonIgnore
+    @ToString.Exclude @EqualsAndHashCode.Exclude
+    @OneToMany(targetEntity = Conge.class, mappedBy = "type", cascade = CascadeType.ALL)
+    private Collection<Conge> congeCollection;
 
     public CongeType(String leave_name, String type, String leave_unit, TypeStatut status, String note) {
         this.leave_name = leave_name;

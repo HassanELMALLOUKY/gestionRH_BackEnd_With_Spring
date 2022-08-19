@@ -61,7 +61,7 @@ public class CongeServiceImp implements CongeService{
             congeInfo.setMotif(conge.getReason());
             congeInfo.setStatus(conge.getStatus().toString());
             congeInfo.setDemi_journee(conge.getNoOfDays());
-            congeInfo.setType(conge.getType());
+            congeInfo.setType(conge.getType().getType());
 
             congeInfos.add(congeInfo);
         }
