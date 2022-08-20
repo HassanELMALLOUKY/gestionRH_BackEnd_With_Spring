@@ -14,9 +14,13 @@ import java.util.List;
 public class CongeServiceImp implements CongeService{
     @Autowired
     private CongeRepository congeRepository;
+    @Autowired
+    private AttendanceService attendanceService;
 
     @Override
     public Conge saveConge(Conge conge) {
+        conge.setSold(String.valueOf(conge.getSalarie().getAnciennete()/30*1.5));
+        conge.setNoOfDays(String.valueOf(attendanceService.getSumNbrDayabsence(conge.getSalarie().getCINE())));
         return congeRepository.save(conge);
     }
 
