@@ -26,5 +26,6 @@ public interface SalarieRepository extends JpaRepository<Salarie, Long> {
     @Query("select s from Salarie s where s.id not in (select d.salarie.id from DocAdminstratifJoindre d)")
     //@Query("select s from DocAdminstratifJoindre d join Salarie s on d.salarie.id = s.id")
     public List<Salarie> getRestSalaries();
+    public Salarie getSalarieByUsername(String username);
 
 }
