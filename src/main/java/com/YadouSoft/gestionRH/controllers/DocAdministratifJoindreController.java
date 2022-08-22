@@ -33,6 +33,7 @@ public class DocAdministratifJoindreController {
     @Autowired
     ImageRepository imageRepository;
     @PostMapping("/upload")
+
     public void uplaodImage(
             @RequestParam("copieCINE") MultipartFile copieCINE,
             @RequestParam("copieCNSS") MultipartFile copieCNSS,

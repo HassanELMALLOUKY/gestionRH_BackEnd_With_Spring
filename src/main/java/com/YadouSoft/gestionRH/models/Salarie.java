@@ -3,6 +3,7 @@ package com.YadouSoft.gestionRH.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenerationTime;
@@ -10,6 +11,7 @@ import javax.annotation.Generated;
 import javax.persistence.*;
 import java.io.DataOutput;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -35,6 +37,11 @@ public class Salarie implements Serializable {
     @Column(nullable = false)
     private String adresse;
     @Column(nullable = false)
+    private String username;
+   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@Formula("1234")
+    private String password="1234";
+    @Column(nullable = false)
     private String tele;
     @Column(unique = true,nullable = false)
     private String email;
@@ -51,8 +58,6 @@ public class Salarie implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateDepart;
     private String motifDepart;
-    @Column(nullable = false)
-    private String role;
     @Column(nullable = false)
     private Boolean marie;
     @Column(nullable = false)
@@ -81,6 +86,9 @@ public class Salarie implements Serializable {
     @ToString.Exclude @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "salarie",cascade = CascadeType.ALL)
     private Collection<abscent> abscents;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
 
 

@@ -7,6 +7,7 @@ import com.YadouSoft.gestionRH.models.abscent;
 import com.YadouSoft.gestionRH.repositories.ContratRepository;
 import com.YadouSoft.gestionRH.repositories.SalarieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -14,8 +15,14 @@ import java.util.List;
 
 @Service
 public class SalarieService {
-    @Autowired
     SalarieRepository salarieRepository;
+
+    public SalarieService(SalarieRepository salarieRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.salarieRepository = salarieRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     public Salarie getSalarieById(long id){
 
         return salarieRepository.findById(id).get();
@@ -42,6 +49,8 @@ public class SalarieService {
         return salarieRepository.getSalarieNames();
     }
     public Salarie addSalarie(Salarie salarie){
+
+        salarie.setPassword(bCryptPasswordEncoder.encode(salarie.getPassword()));
         return salarieRepository.save(salarie);
     }
     public Collection<Conge> getConge(long id){
@@ -52,5 +61,9 @@ public class SalarieService {
     }
     public List<Salarie> getRestSalaries(){
         return salarieRepository.getRestSalaries();
+    }
+
+    public Salarie loadUserByUsername(String username) {
+        return salarieRepository.getSalarieByUsername(username);
     }
 }

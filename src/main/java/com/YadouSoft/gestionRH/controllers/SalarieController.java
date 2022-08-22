@@ -4,6 +4,8 @@ import com.YadouSoft.gestionRH.models.*;
 import com.YadouSoft.gestionRH.services.DocAdministratifJoindreService;
 import com.YadouSoft.gestionRH.services.SalarieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +28,7 @@ public class SalarieController {
     }
     //Obtenir les info d'un salarié
     @GetMapping("/{id}")
+    @PreAuthorize("has")
     public DocAdminstratifJoindre getSalarieById(@PathVariable long id){
         return salarieService.getSalarieById(id).getDocAdminstratifJoindre();
     }
@@ -37,16 +40,19 @@ public class SalarieController {
     }
     //Ajouter un salarié
     @PostMapping("")
+    @PreAuthorize("hasAuthority('Superviseur')")
     public Salarie saveSalarie(@RequestBody Salarie salarie){
         return salarieService.addSalarie(salarie);
     }
     //Obtenir les info de tous les salariés
     @GetMapping("")
+    @PreAuthorize("hasAnyAuthority('Superviseur','Documenteur','Paie')")
     public List<Salarie> getAllSalaries(){
 
         return salarieService.getAllSalaries();
     }
     @GetMapping("/names")
+    @PreAuthorize("hasAnyAuthority('Basic')")
     public List<String> getAllSalariesNames(){
         List<String> list = new ArrayList<String>();
         salarieService.getAllSalaries().forEach(salarie->{
@@ -74,7 +80,6 @@ public class SalarieController {
         s.setRib(salarie.getRib());
         s.setMarie(salarie.getMarie());
         s.setTauxNormal(salarie.getTauxNormal());
-        s.setRole(salarie.getRole());
         s.setTele(salarie.getTele());
         s.setMotifDepart(salarie.getMotifDepart());
         return salarieService.addSalarie(s);
