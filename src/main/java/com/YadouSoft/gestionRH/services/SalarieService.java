@@ -9,11 +9,13 @@ import com.YadouSoft.gestionRH.repositories.SalarieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
 import java.util.List;
 
 @Service
+@CrossOrigin("*")
 public class SalarieService {
     SalarieRepository salarieRepository;
 

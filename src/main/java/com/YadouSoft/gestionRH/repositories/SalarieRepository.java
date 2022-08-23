@@ -15,7 +15,6 @@ import java.util.List;
 
 @Repository
 @CrossOrigin("*")
-
 public interface SalarieRepository extends JpaRepository<Salarie, Long> {
 
     public Salarie getSalarieByCINE(String cine);
