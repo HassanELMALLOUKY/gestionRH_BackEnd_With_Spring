@@ -29,7 +29,13 @@ public class B2Paie implements Serializable {
   private Double AssuranceM;
   private Double cimr;
   private Double fraisProf;
+  private Double  Voituredefonction;
+  private Double salaireBrut;
+  private Double indemniteDeLogement;
+  private Double eletexo;
   private Double HeuresSupp;
+  private Double irBrut;
+  private Integer chargeFamille;
   private  Double PrimeDanciennete;
   private Double prestationFamiliale;
   private Double prestationSociale;

@@ -59,6 +59,7 @@ public class B2PaieService {
   public  B2Paie SettingData(long id){
     String cine=getsalarieInfo(id).getCINE();
     b=getFicheP(id);
+    b.setName(getsalarieInfo(id).getNom());
     Double tauxN=getsalarieInfo(id).getTauxNormal();
     Double hs25=attendanceService.getSumSup25byCin(cine)*(tauxN * 1.25) ;
     Double hs50=attendanceService.getSumSup50byCin(cine) *(tauxN*1.5) ;
@@ -85,27 +86,38 @@ public class B2PaieService {
     }
    b.setPrimeDanciennete(primeAnciente);
     updateFicheP(b,id);
-  Double salaireBr=salB+b.getIndemniteDedeplacement()+
+  Double salaireBrG=salB+b.getIndemniteDedeplacement()+
             b.getIndemniteDeResponsabilite()+b.getIndemniteDeTransport()+b.getPrimeDebilan()+
-            primeAnciente+b.getPrimeDePanier()+b.getPrimeDerendement();
-  b.setSalaireBrutImposable(salaireBr);
+            primeAnciente+b.getPrimeDePanier()+b.getPrimeDerendement()+b.getVoituredefonction()+b.getIndemniteDeLogement();
+  b.setSalaireBrut(salaireBrG);
+  Double elementsExonorés=b.getIndemniteDedeplacement()+b.getIndemniteDeTransport()+b.getPrimeDePanier()+ b.getVoituredefonction();
+  b.setEletexo(elementsExonorés);
+   Double brutImposable=salaireBrG-elementsExonorés;
+  b.setSalaireBrutImposable(brutImposable);
+      updateFicheP(b,id);
     Double cotisationCnss;
-    if(salaireBr<=6000){
-    cotisationCnss=salaireBr*0.0448;}
+    if(brutImposable<=6000){
+    cotisationCnss=salaireBrG*0.0448;}
     else {cotisationCnss=6000*0.0448;}
     b.setCNSS(cotisationCnss);
-    Double cotisationAmo=salaireBr*0.0226;
+    Double cotisationAmo=brutImposable*0.0226;
     b.setAMO(cotisationAmo);
-    Double assurM=salaireBr*0.0259;
+    Double assurM=brutImposable*0.0259;
     b.setAssuranceM(assurM);
-    Double cimr=salaireBr*0.03;
+    Double cimr=brutImposable*0.06;
     b.setCimr(cimr);
-    Double Frais=salaireBr*0.2;
+    Double Frais=(brutImposable-b.getIndemniteDeLogement())*0.2;
     Double cotisationFraisProf;
     if (Frais>2500){
      cotisationFraisProf= Double.valueOf(2500);}else{cotisationFraisProf=Frais;}
     b.setFraisProf(cotisationFraisProf);
-    Double netImposable=salaireBr-cotisationCnss-cotisationAmo-cimr-cotisationFraisProf-assurM;
+    b.setPrestationFamiliale(brutImposable*0.640);
+    b.setPrestationSociale(brutImposable*0.898);
+    b.setFormatioProf(brutImposable*0.016);
+    b.setAmoPatronale(brutImposable*0.411);
+    b.setMutuellePatronale(brutImposable*0.0259);
+
+    Double netImposable=brutImposable-cotisationCnss-cotisationAmo-cimr-cotisationFraisProf-assurM;
     b.setNetImposable(netImposable);
     Double irBrut=0.0;
     if(netImposable>2501 && netImposable<4167){
@@ -119,7 +131,7 @@ public class B2PaieService {
     } else if (netImposable>=15000) {
         irBrut=(netImposable*0.38)-2033.33;
     }
-
+     b.setIrBrut(irBrut);
     boolean situationF=getsalarieInfo(id).getMarie();
     Integer nbrEnf=getsalarieInfo(id).getNombreEnfants();
     Integer chargeFam=0;
@@ -132,11 +144,14 @@ public class B2PaieService {
     else if (situationF==true && nbrEnf>0) {
     chargeFam=30*nbrEnf+30;
     }
+    b.setChargeFamille(chargeFam);
    Double IrNet;
     if (irBrut>chargeFam){
         IrNet=irBrut-chargeFam;
     }else {IrNet=0.0;}
       b.setIR(IrNet);
+    Double netApayer=salaireBrG-IrNet-cotisationCnss-cotisationAmo-cimr-assurM;
+    b.setSalaireNet(netApayer);
       updateFicheP(b,id);
     return b;
 
