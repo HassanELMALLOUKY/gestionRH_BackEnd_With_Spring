@@ -68,7 +68,8 @@ public class SalarieController {
     }
     //modifier les info d'un salarié
     @PutMapping("/{id}")
-    public Salarie updateSalarieByCINE(@PathVariable long id, @RequestBody Salarie salarie){
+    @PreAuthorize("hasAnyAuthority('Admin','Superviseur')")
+    public Salarie updateSalarieById(@PathVariable long id, @RequestBody Salarie salarie){
         Salarie s=salarieService.getSalarieById(id);
         s.setNom(salarie.getNom());
         s.setPrenom(salarie.getPrenom());
@@ -88,6 +89,7 @@ public class SalarieController {
     }
     //supprimer un salarié
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin','Superviseur')")
     public List<Salarie> deleteSalarieByCINE(@PathVariable long id){
 
         return salarieService.deleteSalarieById(id);
