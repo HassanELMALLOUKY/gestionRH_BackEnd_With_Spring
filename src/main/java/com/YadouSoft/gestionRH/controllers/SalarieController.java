@@ -2,14 +2,12 @@ package com.YadouSoft.gestionRH.controllers;
 
 import com.YadouSoft.gestionRH.models.*;
 import com.YadouSoft.gestionRH.services.DocAdministratifJoindreService;
+import com.YadouSoft.gestionRH.services.RoleService;
 import com.YadouSoft.gestionRH.services.SalarieService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,16 +17,18 @@ import java.util.List;
 @RequestMapping("api/salaries")
 @CrossOrigin("*")
 public class SalarieController {
-    private SalarieService salarieService;
-    @Autowired
-    private DocAdministratifJoindreService docAdministratifJoindreService;
 
-    public SalarieController(SalarieService salarieService) {
+    private SalarieService salarieService;
+    private DocAdministratifJoindreService docAdministratifJoindreService;
+    private RoleService roleService;
+
+    public SalarieController(SalarieService salarieService, DocAdministratifJoindreService docAdministratifJoindreService, RoleService roleService) {
         this.salarieService = salarieService;
+        this.docAdministratifJoindreService = docAdministratifJoindreService;
+        this.roleService = roleService;
     }
     //Obtenir les info d'un salarié
     @GetMapping("/{id}")
-    @PreAuthorize("has")
     public DocAdminstratifJoindre getSalarieById(@PathVariable long id){
         return salarieService.getSalarieById(id).getDocAdminstratifJoindre();
     }
@@ -39,14 +39,16 @@ public class SalarieController {
         return salarieService.getSalarieByCINE(cine);
     }
     //Ajouter un salarié
-    @PostMapping("")
-    @PreAuthorize("hasAuthority('Superviseur')")
-    public Salarie saveSalarie(@RequestBody Salarie salarie){
+    @PostMapping("/{role}")
+    @PreAuthorize("hasAnyAuthority('Superviseur','Admin')")
+    public Salarie saveSalarie(@RequestBody Salarie salarie,@PathVariable("role") String role){
+        Role role1=roleService.getRoleByName(role);
+        salarie.getRoles().add(role1);
         return salarieService.addSalarie(salarie);
     }
     //Obtenir les info de tous les salariés
     @GetMapping("")
-    @PreAuthorize("hasAnyAuthority('Superviseur','Documenteur','Paie')")
+    @PreAuthorize("hasAnyAuthority('Superviseur','Documenteur','Paie','Admin')")
     public List<Salarie> getAllSalaries(){
 
         return salarieService.getAllSalaries();
@@ -100,5 +102,9 @@ public class SalarieController {
         return salarieService.getRestSalaries();
     }
 
-
+    @GetMapping("/username/{username}")
+    @PreAuthorize("hasAnyAuthority('Admin','Basic','Documenteur','Paie','Superviseur')")
+    public Salarie getSalarieByUsername(@PathVariable String username){
+        return salarieService.loadUserByUsername(username);
+    }
 }

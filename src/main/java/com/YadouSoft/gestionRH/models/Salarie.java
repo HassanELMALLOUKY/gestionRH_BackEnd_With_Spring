@@ -39,7 +39,6 @@ public class Salarie implements Serializable {
     @Column(nullable = false)
     private String username;
    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    //@Formula("1234")
     private String password="1234";
     @Column(nullable = false)
     private String tele;
@@ -87,7 +86,7 @@ public class Salarie implements Serializable {
     @OneToMany(mappedBy = "salarie",cascade = CascadeType.ALL)
     private Collection<abscent> abscents;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Collection<Role> roles = new ArrayList<>();
 
 
