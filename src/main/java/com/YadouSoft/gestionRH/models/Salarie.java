@@ -39,7 +39,7 @@ public class Salarie implements Serializable {
     @Column(nullable = false)
     private String username;
    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password="1234";
+    private String password;
     @Column(nullable = false)
     private String tele;
     @Column(unique = true,nullable = false)

@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/salaries")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200/")
 public class SalarieController {
 
     private SalarieService salarieService;
@@ -42,6 +42,7 @@ public class SalarieController {
     @PostMapping("/{role}")
     @PreAuthorize("hasAnyAuthority('Superviseur','Admin')")
     public Salarie saveSalarie(@RequestBody Salarie salarie,@PathVariable("role") String role){
+        System.out.println("front end role: " + role);
         Role role1=roleService.getRoleByName(role);
         salarie.getRoles().add(role1);
         return salarieService.addSalarie(salarie);
@@ -67,9 +68,12 @@ public class SalarieController {
         return salarieService.getSalarieByNomAndPrenom(nom, prenom);
     }
     //modifier les info d'un salarié
-    @PutMapping("/{id}")
-    public Salarie updateSalarieByCINE(@PathVariable long id, @RequestBody Salarie salarie){
+    @PutMapping("/{id}/{role}")
+    @PreAuthorize("hasAnyAuthority('Admin','Superviseur')")
+    public Salarie updateSalarieById(@PathVariable(name = "id") long id, @RequestBody Salarie salarie,@PathVariable("role") String role){
+        Role role1=roleService.getRoleByName(role);
         Salarie s=salarieService.getSalarieById(id);
+        s.getRoles().removeAll(s.getRoles());
         s.setNom(salarie.getNom());
         s.setPrenom(salarie.getPrenom());
         s.setAdresse(salarie.getAdresse());
@@ -84,10 +88,12 @@ public class SalarieController {
         s.setTauxNormal(salarie.getTauxNormal());
         s.setTele(salarie.getTele());
         s.setMotifDepart(salarie.getMotifDepart());
+        s.getRoles().add(role1);
         return salarieService.addSalarie(s);
     }
     //supprimer un salarié
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('Admin','Superviseur')")
     public List<Salarie> deleteSalarieByCINE(@PathVariable long id){
 
         return salarieService.deleteSalarieById(id);
