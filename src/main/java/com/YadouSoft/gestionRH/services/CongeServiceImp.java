@@ -19,8 +19,10 @@ public class CongeServiceImp implements CongeService{
 
     @Override
     public Conge saveConge(Conge conge) {
-        conge.setSold(String.valueOf(conge.getSalarie().getAnciennete()/30*1.5));
-        conge.setNoOfDays(String.valueOf(attendanceService.getSumNbrDayabsence(conge.getSalarie().getCINE())));
+        conge.setSold(String.valueOf((conge.getSalarie().getAnciennete())));
+        System.out.println("Sold Value ::::::::"+ (conge.getSalarie().getAnciennete()));
+        conge.setNoOfDays(String.valueOf(attendanceService.getSumNbrDayabsence(String.valueOf(conge.getSalarie().getId()))));
+        System.out.println("Absent days value :::::::::::"+ attendanceService.getSumNbrDayabsence(String.valueOf(conge.getSalarie().getId())));
         return congeRepository.save(conge);
     }
 
