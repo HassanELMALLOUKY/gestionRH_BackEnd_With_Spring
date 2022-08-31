@@ -27,7 +27,7 @@ public class B2PaieController {
         this.b2PaieService=b2PaieService;
     }
     @GetMapping("/b2paie/{id}")
-    @PreAuthorize("hasAuthority('Paie')")
+    @PreAuthorize("hasAnyAuthority('Admin','Paie')")
     public B2Paie getFicheById(@PathVariable long id){
 
         return b2PaieService.getFicheP(id);

@@ -126,6 +126,7 @@ public class B2PaieService {
     b.setFormatioProf(brutImposable*0.016);
     b.setAmoPatronale(brutImposable*0.411);
     b.setMutuellePatronale(brutImposable*0.0259);
+    b.setCimrPatronale(brutImposable*0.0780);
 
     Double netImposable=brutImposable-cotisationCnss-cotisationAmo-cimr-cotisationFraisProf-assurM;
     b.setNetImposable(netImposable);
