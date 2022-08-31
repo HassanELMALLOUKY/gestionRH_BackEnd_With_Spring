@@ -72,7 +72,7 @@ public class AttendanceService {
         float jjj=Float.parseFloat(df.format(res));
         abscent.setNbr_h_absence(Float.parseFloat(df.format(res)));
         System.out.println(Float.parseFloat(df.format(res)));
-        //abscent.setTotal(df.format(res));
+        abscent.setTotal(Float.parseFloat(df.format(res)));
 
         return Float.parseFloat(df.format(res));
     }
@@ -194,7 +194,7 @@ public class AttendanceService {
         getAllbycin(cin).forEach(abscent -> {
             nbr_j_absence+=abscent.getNbr_h_absence();
         });
-        return nbr_j_absence/24;
+        return nbr_j_absence;
     }
 
 

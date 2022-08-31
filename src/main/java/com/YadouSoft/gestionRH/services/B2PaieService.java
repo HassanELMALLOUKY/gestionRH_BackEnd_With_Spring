@@ -1,5 +1,6 @@
 package com.YadouSoft.gestionRH.services;
 
+import com.YadouSoft.gestionRH.controllers.SalarieController;
 import com.YadouSoft.gestionRH.models.B2Paie;
 import com.YadouSoft.gestionRH.models.Salarie;
 import com.YadouSoft.gestionRH.models.abscent;
@@ -9,6 +10,8 @@ import com.YadouSoft.gestionRH.repositories.SalarieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,6 +21,8 @@ public class B2PaieService {
     B2PaieRepository b2PaieRepository;
     SalarieRepository salarieRepository;
   AbscentRepositories  abscentRepositories;
+    @Autowired
+    SalarieController salarieController;
   @Autowired
   AttendanceService attendanceService;
 
@@ -52,15 +57,20 @@ public class B2PaieService {
     //return  b2PaieRepository.getEmpInfo(salarie);
 
   }
-    public List<Salarie> getsalByb2(){
-        return b2PaieRepository.getsalByb2();
-    }
+   /* public List<B2Paie> getsalByb2(String username){
+      return  b2PaieRepository.getBulletinByUsername(username);
+        //return b2PaieRepository.getsalByb2(username);
+    }*/
 
   public  B2Paie SettingData(long id){
     String cine=getsalarieInfo(id).getCINE();
     b=getFicheP(id);
     b.setName(getsalarieInfo(id).getNom());
+    b.setUsername(getsalarieInfo(id).getUsername());
     Double tauxN=getsalarieInfo(id).getTauxNormal();
+    float absence=attendanceService.getSumNbrDayabsence(cine);
+    Double salBase=tauxN *(161-absence);
+
     Double hs25=attendanceService.getSumSup25byCin(cine)*(tauxN * 1.25) ;
     Double hs50=attendanceService.getSumSup50byCin(cine) *(tauxN*1.5) ;
     Double hs100=attendanceService.getSumSup100byCin(cine) *(tauxN *2);
@@ -152,7 +162,9 @@ public class B2PaieService {
       b.setIR(IrNet);
     Double netApayer=salaireBrG-IrNet-cotisationCnss-cotisationAmo-cimr-assurM;
     b.setSalaireNet(netApayer);
+    b.setPaiedatem(LocalDate.now());
       updateFicheP(b,id);
+
     return b;
 
   }

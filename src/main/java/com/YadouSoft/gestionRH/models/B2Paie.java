@@ -12,9 +12,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Blob;
+import java.time.LocalDate;
+import java.util.Date;
 
 @NoArgsConstructor
 @Entity
@@ -46,6 +50,8 @@ public class B2Paie implements Serializable {
   private  Integer PrimeDebilan;
   private  Integer PrimeDePanier;
   private  Integer PrimeDerendement;
+  @Column(columnDefinition = "LONGTEXT")
+  private String pdf;
   private  Integer IndemniteDeResponsabilite;
   private  Integer IndemniteDedeplacement;
   private  Integer IndemniteDeTransport;
@@ -53,7 +59,12 @@ public class B2Paie implements Serializable {
   private  Double NetImposable;
   private  Double IR;
   private  Double SalaireNet;
+  private String username;
   private  String name;
+  private Double Salairebase;
+  private Double heurenormale;
+
+  private LocalDate paiedatem;
  // @JsonIgnore
   //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   @ToString.Exclude @EqualsAndHashCode.Exclude
