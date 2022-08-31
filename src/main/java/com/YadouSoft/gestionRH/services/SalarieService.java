@@ -7,6 +7,7 @@ import com.YadouSoft.gestionRH.models.abscent;
 import com.YadouSoft.gestionRH.repositories.ContratRepository;
 import com.YadouSoft.gestionRH.repositories.SalarieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,13 +19,13 @@ import java.util.List;
 @CrossOrigin("*")
 public class SalarieService {
     SalarieRepository salarieRepository;
-
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     public SalarieService(SalarieRepository salarieRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.salarieRepository = salarieRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @PreAuthorize("hasAnyAuthority('Admin','Basic','Documenteur','Paie','Superviseur')")
     public Salarie getSalarieById(long id){
 
         return salarieRepository.findById(id).get();
@@ -68,4 +69,5 @@ public class SalarieService {
     public Salarie loadUserByUsername(String username) {
         return salarieRepository.getSalarieByUsername(username);
     }
+
 }

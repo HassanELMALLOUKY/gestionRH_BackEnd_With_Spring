@@ -5,12 +5,19 @@ import com.YadouSoft.gestionRH.services.DocAdministratifJoindreService;
 import com.YadouSoft.gestionRH.services.RoleService;
 import com.YadouSoft.gestionRH.services.SalarieService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 
 @RestController
@@ -21,11 +28,13 @@ public class SalarieController {
     private SalarieService salarieService;
     private DocAdministratifJoindreService docAdministratifJoindreService;
     private RoleService roleService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public SalarieController(SalarieService salarieService, DocAdministratifJoindreService docAdministratifJoindreService, RoleService roleService) {
+    public SalarieController(SalarieService salarieService, DocAdministratifJoindreService docAdministratifJoindreService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.salarieService = salarieService;
         this.docAdministratifJoindreService = docAdministratifJoindreService;
         this.roleService = roleService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
     //Obtenir les info d'un salarié
     @GetMapping("/{id}")
@@ -113,4 +122,21 @@ public class SalarieController {
     public Salarie getSalarieByUsername(@PathVariable String username){
         return salarieService.loadUserByUsername(username);
     }
+
+    @PostMapping("/change_password/{username}/{oldPassword}_{newPassword}")
+    @PreAuthorize("hasAnyAuthority('Admin','Basic','Documenteur','Paie','Superviseur')")
+    public boolean changePassword(@PathVariable String username,@PathVariable(name = "oldPassword") String oldPassword, @PathVariable("newPassword") String newPassword){
+        Salarie salarie=salarieService.loadUserByUsername(username);
+        System.out.println("real old password: "+salarie.getPassword());
+        System.out.println("old password: "+bCryptPasswordEncoder.encode(oldPassword));
+       // return bCryptPasswordEncoder.matches(oldPassword,salarie.getPassword());
+        if(bCryptPasswordEncoder.matches(oldPassword,salarie.getPassword())){
+            salarie.setPassword(newPassword);
+            updateSalarieById(salarie.getId(),salarie,"Admin");
+            return true;
+        }
+        return false;
+
+    }
+
 }
