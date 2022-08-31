@@ -24,6 +24,10 @@ public class AttendanceController {
     public List<abscent> getallAbscent(){
         return attendanceService.getAllAbscent() ;
     }
+    @GetMapping("/total/{cin}")
+    public float gettotal(@PathVariable  String cin){
+        return attendanceService.getSumNbrDayabsence(cin) ;
+    }
 
     @GetMapping("/abscentesbycin/{cin}")
     public List<abscent> getallAbscent(@PathVariable String cin){

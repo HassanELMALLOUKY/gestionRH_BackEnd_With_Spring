@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface B2PaieRepository extends JpaRepository<B2Paie, Long> {
         B2Paie findBysalarie_id(long salarie);
-
+    public List <B2Paie> getBulletinByUsername(String username);
        // @Query("select  b from B2Paie  b join  b.salarie s where b.id=b.salarie.id")
-       @Query("select s from B2Paie b join b.salarie s where s.id = b.salarie.id ")
-       List<Salarie> getsalByb2();
+       /*@Query("select b from B2Paie b  where b.salarie.username = 'username' ")
+       List<B2Paie> getsalByb2(String username);*/
         }
